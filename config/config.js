@@ -1,8 +1,8 @@
 module.exports = {
   development: {
-    username: 'chuanxin',
+    username: '<YOUR_USER_NAME>',
     password: null,
-    database: 'minesweeper_development',
+    database: '<YOUR_APP_NAME>_development',
     host: '127.0.0.1',
     dialect: 'postgres',
   },
