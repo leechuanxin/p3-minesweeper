@@ -80,7 +80,7 @@ const countMines = (board) => {
 
 const printBoard = (board) => {
   const minesweeper = document.querySelector('#msWrapper');
-  minesweeper.classList.add('minesweeper');
+  minesweeper.classList.add('ms-wrapper');
   // print columns
   for (let i = 0; i < board.length; i += 1) {
     const row = document.createElement('div');
