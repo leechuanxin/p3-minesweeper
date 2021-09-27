@@ -13,6 +13,11 @@
     position: relative;
     padding: 0;
 
+    &.unopened {
+      cursor: pointer;
+      background: #fff59d;
+    }
+
     &:after {
       content: "";
       display: block;
