@@ -1,12 +1,11 @@
 import axios from 'axios';
 import './styles.scss';
 
-console.log('hello world');
-
 const GRID_SIZE = 252;
 const NUMBER_OF_COLS = 12;
 const NUMBER_OF_ROWS = Math.floor(GRID_SIZE / NUMBER_OF_COLS);
 const MINE_COUNT = 51;
+const TURN_COUNT = 1;
 
 const BOARD = [];
 
@@ -78,16 +77,107 @@ const countMines = (board) => {
   return sum;
 };
 
+const updateTurnCount = () => {
+  const turnCountSpan = document.querySelector('#turnCount');
+  let turnCount = Number(turnCountSpan.innerText);
+  turnCount += 1;
+  turnCountSpan.innerText = turnCount.toString();
+};
+
+const getOpenTiles = (board, row, col, arr, dir) => {
+  // base cases
+  if (
+    row < 0
+    || row >= board.length
+    || col < 0
+    || col >= board[0].length
+    || board[row][col].opened === true
+  ) {
+    return;
+  }
+
+  // number or mine
+  if (board[row][col].value.trim() !== '') {
+    board[row][col].opened = true;
+    return;
+  }
+
+  // first entry, go all directions
+  if (arr.length === 0) {
+    board[row][col].opened = true;
+
+    // go top
+    getOpenTiles(board, row - 1, col, arr, 'top');
+    // go bottom
+    getOpenTiles(board, row + 1, col, arr, 'bottom');
+    // go left
+    getOpenTiles(board, row, col - 1, arr, 'left');
+    // go right
+    getOpenTiles(board, row, col + 1, arr, 'right');
+    // go top-left
+    getOpenTiles(board, row - 1, col - 1, arr, 'top-left');
+    // go top-right
+    getOpenTiles(board, row - 1, col + 1, arr, 'top-right');
+    // go bottom-left
+    getOpenTiles(board, row + 1, col - 1, arr, 'bottom-left');
+    // go bottom-right
+    getOpenTiles(board, row + 1, col + 1, arr, 'bottom-right');
+  } else {
+    board[row][col].opened = true;
+
+    if (dir !== 'top') {
+      // go bottom
+      getOpenTiles(board, row + 1, col, arr, dir);
+    }
+
+    if (dir !== 'bottom') {
+      // go top
+      getOpenTiles(board, row - 1, col, arr, dir);
+    }
+
+    if (dir !== 'left') {
+      // go right
+      getOpenTiles(board, row, col + 1, arr, dir);
+    }
+
+    if (dir !== 'right') {
+      // go left
+      getOpenTiles(board, row, col - 1, arr, dir);
+    }
+
+    if (dir !== 'top-left') {
+      // go bottom-right
+      getOpenTiles(board, row + 1, col + 1, arr, dir);
+    }
+
+    if (dir !== 'top-right') {
+      // go bottom-left
+      getOpenTiles(board, row + 1, col - 1, arr, dir);
+    }
+
+    if (dir !== 'bottom-left') {
+      // go top-right
+      getOpenTiles(board, row - 1, col + 1, arr, dir);
+    }
+
+    if (dir !== 'bottom-right') {
+      // go top-left
+      getOpenTiles(board, row - 1, col - 1, arr, dir);
+    }
+  }
+};
+
 const handleTileClick = (board) => (e) => {
   const targetId = e.currentTarget.id;
+  console.log('targetId:', targetId);
   const rowIdx = Number(targetId.split('_')[0]);
   const colIdx = Number(targetId.split('_')[1]);
-  board[rowIdx][colIdx].opened = true;
-  if (board[rowIdx][colIdx].value.trim() === '') {
-    console.log('is empty tile');
-  } else {
-    console.log('is tile:', board[rowIdx][colIdx].value);
+  if (board[rowIdx][colIdx].value.trim() !== '*') {
+    updateTurnCount();
   }
+
+  // open tiles
+  getOpenTiles(board, rowIdx, colIdx, []);
   printBoard(board);
 };
 
