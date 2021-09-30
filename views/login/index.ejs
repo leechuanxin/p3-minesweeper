@@ -1,0 +1,91 @@
+<%- include('../headers/html-header', { title: "Log In "}); -%><%-
+include('../nav/navbar', {}); -%>
+<div class="container-fluid d-flex align-items-stretch pt-5">
+  <div class="row align-items-stretch w-100 pt-3">
+    <div class="col-12 pt-1">
+      <p class="mb-0">
+        <a href="/"><small>« Back to Home</small></a>
+      </p>
+      <hr />
+    </div>
+    <div class="col-12 py-3">
+      <form action="/login" method="POST">
+        <div class="row">
+          <div class="col-12">
+            <h4 class="mb-3 index-header">Log In</h4>
+          </div>
+          <div class="col-12">
+            <p class="mb-3">
+              Do not have an account yet? Register <a href="/signup">here.</a>
+            </p>
+          </div>
+          <% if (genericSuccess && genericSuccess.message) { %>
+          <div class="col-12">
+            <div class="alert alert-success" role="alert">
+              <%= genericSuccess.message %>
+            </div>
+          </div>
+          <% } %> <% if (genericError && genericError.message) { %>
+          <div class="col-12">
+            <div class="alert alert-danger" role="alert">
+              <%= genericError.message %>
+            </div>
+          </div>
+          <% } %>
+          <div class="col-12 mb-3">
+            <label for="userName">
+              <strong>Username</strong>
+            </label>
+            <input
+              type="text"
+              class="
+                form-control
+                <%
+                if
+                (userInfo.username_invalid)
+                {%>
+                is-invalid
+                <%
+                }
+                %>
+              "
+              id="userName"
+              name="username"
+              value="<%= userInfo.username %>"
+              placeholder="e.g. chee_kean"
+            />
+            <div class="invalid-feedback"><%= userInfo.username_invalid %></div>
+          </div>
+          <div class="col-12 mb-3">
+            <label for="password">
+              <strong>Password</strong>
+            </label>
+            <input
+              type="password"
+              class="
+                form-control
+                <%
+                if
+                (userInfo.password_invalid)
+                {%>
+                is-invalid
+                <%
+                }
+                %>
+              "
+              id="password"
+              name="password"
+              value=""
+            />
+            <div class="invalid-feedback"><%= userInfo.password_invalid %></div>
+          </div>
+        </div>
+        <hr class="mb-4" />
+        <button class="btn btn-primary btn-lg btn-block" type="submit">
+          Log In
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+<%- include('../footers/html-footer'); -%>
