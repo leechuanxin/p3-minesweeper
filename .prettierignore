@@ -1,9 +1,3 @@
 # Header, footer partials
 views/footers/
 views/headers/
-
-# Dependency directories
-node_modules/
-
-# Do not commit the distribution folder compiled by Webpack
-dist
