@@ -1,9 +1,9 @@
-export default function initLoginController() {
+export default function initSignupController() {
   const index = (request, response) => {
     if (request.isUserLoggedIn) {
       response.redirect('/');
     } else {
-      response.render('login/index', {
+      response.render('signup/index', {
         user: {}, userInfo: {}, genericSuccess: {}, genericError: {},
       });
     }
