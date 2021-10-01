@@ -2,6 +2,9 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import methodOverride from 'method-override';
 
+// CUSTOM IMPORTS
+import db from './models/index.mjs';
+import auth from './middleware.mjs';
 import bindRoutes from './routes.mjs';
 
 // Initialise Express instance
@@ -20,6 +23,9 @@ app.use(methodOverride('_method'));
 app.use(express.static('public'));
 // Expose the files stored in the distribution folder
 app.use(express.static('dist'));
+
+// Auth
+app.use(auth(db));
 
 // Bind route definitions to the Express application
 bindRoutes(app);
