@@ -2,7 +2,7 @@ import { Sequelize } from 'sequelize';
 import url from 'url';
 import allConfig from '../config/config.js';
 
-import itemModel from './item.mjs';
+import userModel from './user.mjs';
 
 const env = process.env.NODE_ENV || 'development';
 const config = allConfig[env];
@@ -30,7 +30,7 @@ else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-db.Item = itemModel(sequelize, Sequelize.DataTypes);
+db.User = userModel(sequelize, Sequelize.DataTypes);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
