@@ -3,7 +3,7 @@ import jsSHA from 'jssha';
 // CUSTOM IMPORTS
 import * as globals from './globals.mjs';
 
-const getHash = (input) => {
+export const getHash = (input) => {
   // create new SHA object
   // eslint-disable-next-line new-cap
   const shaObj = new jsSHA('SHA-512', 'TEXT', { encoding: 'UTF8' });
@@ -17,4 +17,4 @@ const getHash = (input) => {
   return shaObj.getHash('HEX');
 };
 
-export default getHash;
+export const getInvalidFormRequests = (obj) => Object.keys(obj).filter((key) => key.indexOf('invalid') >= 0);

@@ -1,5 +1,5 @@
 // CUSTOM IMPORTS
-import getHash from './util.mjs';
+import * as util from './util.mjs';
 import * as globals from './globals.mjs';
 
 const auth = (db) => async (request, response, next) => {
@@ -11,7 +11,7 @@ const auth = (db) => async (request, response, next) => {
     // create an unhashed cookie string based on user ID and salt
     const unhashedCookieString = `${request.cookies.userId}-${globals.SALT}`;
     // get the hashed value that should be inside the cookie
-    const hash = getHash(unhashedCookieString);
+    const hash = util.getHash(unhashedCookieString);
 
     // test the value of the cookie
     if (request.cookies.loggedIn === hash) {
