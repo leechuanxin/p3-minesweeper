@@ -12,7 +12,9 @@
           <i class="fas fa-bars"></i>
         </a>
       </div>
+      <% if (showButton) { %>
       <div class="col-9 text-end">
+        <% if (user && user.id) { %>
         <form
           class="d-inline-block"
           action="/logout?_method=DELETE"
@@ -20,8 +22,11 @@
         >
           <input class="btn btn-danger" type="submit" value="Log Out" />
         </form>
+        <% } else { %>
         <a class="btn btn-success" href="/login" role="button">Log In</a>
+        <% } %>
       </div>
+      <% } %>
     </div>
   </div>
 </nav>
@@ -55,8 +60,8 @@
           </a>
         </li>
         <li>
-          <a href="/story" class="nav-link text-white ps-4"
-            >Create a New Story</a
+          <a href="/games/new" class="nav-link text-white ps-4"
+            >Create a New Game</a
           >
         </li>
       </ul>

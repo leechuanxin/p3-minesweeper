@@ -1,0 +1,28 @@
+<%- include('../headers/html-header', { title: "Minesweeper"}); -%><%-
+include('../nav/navbar', { user: user, showButton: true, pageState: "home"});
+-%>
+<div class="container-fluid pt-5">
+  <div class="row w-100 pt-4 pb-3 px-2">
+    <% if (user && user.id) { %>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12 col-md-2"></div>
+        <div class="col-12 col-md-8">
+          <div class="d-grid">
+            <a
+              class="btn btn-lg btn-outline-success"
+              href="/games/new"
+              role="button"
+              >+ Create a New Game</a
+            >
+          </div>
+        </div>
+        <div class="col-12 col-md-2"></div>
+      </div>
+
+      <hr />
+    </div>
+    <% } %>
+  </div>
+</div>
+<%- include('../footers/html-footer'); -%>
