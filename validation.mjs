@@ -1,5 +1,5 @@
 const validateRealName = (userInfo, type) => {
-  const regex = /^[A-Za-z0-9\-.\s]+$/;
+  const regex = /^[A-Za-z'\-.\s]+$/;
   const obj = {};
   if (!userInfo.realname || userInfo.realname.trim === '' || userInfo.realname.search(regex) === -1) {
     if (type === 'signup') {
