@@ -10,6 +10,7 @@ export default function bindRoutes(app) {
   const SignupController = initSignupController(db);
 
   app.get('/login', LoginController.index);
+  app.post('/login', LoginController.create);
   app.get('/signup', SignupController.index);
   app.post('/signup', SignupController.create);
 
