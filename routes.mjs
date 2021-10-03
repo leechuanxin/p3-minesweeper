@@ -16,6 +16,7 @@ export default function bindRoutes(app) {
   app.get('/', IndexController.index);
   app.get('/login', LoginController.index);
   app.post('/login', LoginController.create);
+  app.delete('/logout', LoginController.destroy);
   app.get('/signup', SignupController.index);
   app.post('/signup', SignupController.create);
   app.get('/games/new', GamesController.newForm);

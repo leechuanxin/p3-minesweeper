@@ -61,8 +61,19 @@ export default function initLoginController(db) {
     }
   };
 
+  const destroy = (request, response) => {
+    if (request.isUserLoggedIn) {
+      response.clearCookie('userId');
+      response.clearCookie('loggedIn');
+      response.redirect('/');
+    } else {
+      response.status(403).send('Error logging out!');
+    }
+  };
+
   return {
     index,
     create,
+    destroy,
   };
 }
