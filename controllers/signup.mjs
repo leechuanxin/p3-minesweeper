@@ -26,7 +26,7 @@ export default function initSignupController(db) {
       } else {
       // get the hashed password as output from the SHA object
         const hashedPassword = util.getHash(validatedUserInfo.password);
-        const nameFmt = validatedUserInfo.realname.split("'").join("''");
+        const nameFmt = validatedUserInfo.realname.trim().replace(/\s+/g, ' ');
         const { username } = validatedUserInfo;
         const user = await db.User.findOne({
           where: {
