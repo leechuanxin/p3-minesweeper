@@ -18,7 +18,12 @@ const auth = (db) => async (request, response, next) => {
       request.isUserLoggedIn = true;
 
       // look for this user in the database
-      const user = await db.User.findByPk(request.cookies.userId);
+      const user = await db.User.findOne({
+        where: {
+          id: request.cookies.userId,
+        },
+        attributes: { exclude: ['password'] },
+      });
 
       if (!user) {
         response.clearCookie('userId');
@@ -29,7 +34,7 @@ const auth = (db) => async (request, response, next) => {
       }
 
       // set the user as a key in the request object so that it's accessible in the route
-      request.user = user;
+      request.user = user.dataValues;
       next();
 
       // make sure we don't get down to the next() below

@@ -19,6 +19,7 @@ export default function bindRoutes(app) {
   app.get('/signup', SignupController.index);
   app.post('/signup', SignupController.create);
   app.get('/games/new', GamesController.newForm);
+  app.post('/games', GamesController.create);
 
   app.get('/home', (request, response) => {
     response.render('home');
