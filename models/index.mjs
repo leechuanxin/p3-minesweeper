@@ -3,6 +3,7 @@ import url from 'url';
 import allConfig from '../config/config.js';
 
 import userModel from './user.mjs';
+import gameModel from './game.mjs';
 
 const env = process.env.NODE_ENV || 'development';
 const config = allConfig[env];
@@ -31,6 +32,42 @@ else {
 }
 
 db.User = userModel(sequelize, Sequelize.DataTypes);
+db.Game = gameModel(sequelize, Sequelize.DataTypes);
+
+// creates a method in the
+// user object with getCreatedGames, etc.
+// allows the use of include with createdGames
+db.User.hasMany(db.Game, {
+  as: 'createdGames',
+  foreignKey: 'created_user_id',
+});
+
+db.User.hasMany(db.Game, {
+  as: 'playedGames',
+  foreignKey: 'player_user_id',
+});
+
+db.User.hasMany(db.Game, {
+  as: 'wonGames',
+  foreignKey: 'winner_user_id',
+});
+
+// creates a method in the
+// game object that has a user - the creator of the game
+db.Game.belongsTo(db.User, {
+  as: 'creator',
+  foreignKey: 'created_user_id',
+});
+
+db.Game.belongsTo(db.User, {
+  as: 'player',
+  foreignKey: 'player_user_id',
+});
+
+db.Game.belongsTo(db.User, {
+  as: 'winner',
+  foreignKey: 'winner_user_id',
+});
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
