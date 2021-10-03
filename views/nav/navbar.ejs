@@ -55,12 +55,12 @@
       <hr />
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-          <a href="/" class="nav-link text-white ps-4" aria-current="page">
+          <a href="/" class="nav-link text-white ps-4 <% if (pageState === "home") { %>active<% } %>" aria-current="page">
             Home
           </a>
         </li>
         <li>
-          <a href="/games/new" class="nav-link text-white ps-4"
+          <a href="/games/new" class="nav-link text-white ps-4 <% if (pageState === "createGame") { %>active<% } %>"
             >Create a New Game</a
           >
         </li>
