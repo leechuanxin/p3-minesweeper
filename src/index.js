@@ -84,7 +84,7 @@ const updateTurnCount = () => {
   turnCountSpan.innerText = turnCount.toString();
 };
 
-const getOpenTiles = (board, row, col, arr, dir) => {
+const getOpenTiles = (board, row, col) => {
   // base cases
   if (
     row < 0
@@ -102,69 +102,24 @@ const getOpenTiles = (board, row, col, arr, dir) => {
     return;
   }
 
-  // first entry, go all directions
-  if (arr.length === 0) {
-    board[row][col].opened = true;
+  board[row][col].opened = true;
 
-    // go top
-    getOpenTiles(board, row - 1, col, arr, 'top');
-    // go bottom
-    getOpenTiles(board, row + 1, col, arr, 'bottom');
-    // go left
-    getOpenTiles(board, row, col - 1, arr, 'left');
-    // go right
-    getOpenTiles(board, row, col + 1, arr, 'right');
-    // go top-left
-    getOpenTiles(board, row - 1, col - 1, arr, 'top-left');
-    // go top-right
-    getOpenTiles(board, row - 1, col + 1, arr, 'top-right');
-    // go bottom-left
-    getOpenTiles(board, row + 1, col - 1, arr, 'bottom-left');
-    // go bottom-right
-    getOpenTiles(board, row + 1, col + 1, arr, 'bottom-right');
-  } else {
-    board[row][col].opened = true;
-
-    if (dir !== 'top') {
-      // go bottom
-      getOpenTiles(board, row + 1, col, arr, dir);
-    }
-
-    if (dir !== 'bottom') {
-      // go top
-      getOpenTiles(board, row - 1, col, arr, dir);
-    }
-
-    if (dir !== 'left') {
-      // go right
-      getOpenTiles(board, row, col + 1, arr, dir);
-    }
-
-    if (dir !== 'right') {
-      // go left
-      getOpenTiles(board, row, col - 1, arr, dir);
-    }
-
-    if (dir !== 'top-left') {
-      // go bottom-right
-      getOpenTiles(board, row + 1, col + 1, arr, dir);
-    }
-
-    if (dir !== 'top-right') {
-      // go bottom-left
-      getOpenTiles(board, row + 1, col - 1, arr, dir);
-    }
-
-    if (dir !== 'bottom-left') {
-      // go top-right
-      getOpenTiles(board, row - 1, col + 1, arr, dir);
-    }
-
-    if (dir !== 'bottom-right') {
-      // go top-left
-      getOpenTiles(board, row - 1, col - 1, arr, dir);
-    }
-  }
+  // go top
+  getOpenTiles(board, row - 1, col);
+  // go bottom
+  getOpenTiles(board, row + 1, col);
+  // go left
+  getOpenTiles(board, row, col - 1);
+  // go right
+  getOpenTiles(board, row, col + 1);
+  // go top-left
+  getOpenTiles(board, row - 1, col - 1);
+  // go top-right
+  getOpenTiles(board, row - 1, col + 1);
+  // go bottom-left
+  getOpenTiles(board, row + 1, col - 1);
+  // go bottom-right
+  getOpenTiles(board, row + 1, col + 1);
 };
 
 const handleTileClick = (board) => (e) => {
@@ -177,7 +132,7 @@ const handleTileClick = (board) => (e) => {
   }
 
   // open tiles
-  getOpenTiles(board, rowIdx, colIdx, []);
+  getOpenTiles(board, rowIdx, colIdx);
   printBoard(board);
 };
 
