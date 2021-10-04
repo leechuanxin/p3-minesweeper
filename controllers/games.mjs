@@ -38,18 +38,18 @@ export default function initGamesController(db) {
         // set player
         const player1 = {
           ...request.user,
-          flag_count: 0,
-          turn_count: 0,
+          flagCount: 0,
+          turnCount: 0,
         };
         // create game state
         const gameState = {
           board: boardWithMines,
-          printed_board: printedBoard,
+          printedBoard,
           player1,
           player2: null,
-          total_mines: globals.MINE_COUNT,
-          mines_left: globals.MINE_COUNT,
-          current_player_turn: request.user.id,
+          totalMines: globals.MINE_COUNT,
+          minesLeft: globals.MINE_COUNT,
+          currentPlayerTurn: request.user.id,
         };
 
         // initialize new game
@@ -64,17 +64,48 @@ export default function initGamesController(db) {
         };
 
         const game = await db.Game.create(newGame);
-        console.log('new game:', game);
 
-        response.redirect(`/game/${game.id}`);
+        response.redirect(`/games/${game.id}`);
       }
     } catch (error) {
       response.send(`error: ${error.stack}`);
     }
   };
 
+  const show = async (request, response) => {
+    try {
+      const { id } = request.params;
+      const { user } = request;
+      let title = '';
+      const game = await db.Game.findOne({
+        where: {
+          id,
+        },
+      });
+
+      if (!game) {
+        throw new Error(globals.GAME_NOT_FOUND_ERROR_MESSAGE);
+      }
+
+      if (game.type === 'practice') {
+        title = `${game.gameState.player1.realName}'s Practice Mode`;
+      } else {
+        title = '2 Player Game';
+      }
+
+      response.render('games/show', { user, game: game.dataValues, title });
+    } catch (error) {
+      if (error.message === globals.GAME_NOT_FOUND_ERROR_MESSAGE) {
+        response.status(404).send(`Error 404: ${globals.GAME_NOT_FOUND_ERROR_MESSAGE}`);
+      } else {
+        response.send(`Error: ${error.message}`);
+      }
+    }
+  };
+
   return {
     newForm,
     create,
+    show,
   };
 }

@@ -1,0 +1,34 @@
+<%- include('../headers/html-header', { title: title }); -%><%-
+include('../nav/navbar', { user: user, showButton: true, pageState:
+"createGame"}); -%>
+<div class="container-fluid pt-5">
+  <div class="row w-100 pt-3">
+    <div class="col-12 pt-1">
+      <p class="mb-0">
+        <a href="/"><small>« Back to Home</small></a>
+      </p>
+      <hr />
+    </div>
+    <h1 class="text-center">Turn Count: <span id="turnCount">1</span></h1>
+    <div class="container">
+      <div class="row">
+        <div id="msWrapper" class="ms-wrapper col-8 m-auto">
+          <% game.gameState.printedBoard.forEach((row, rowIdx) => { %>
+          <div class="row">
+            <% row.forEach((col, colIdx) => { %>
+            <div
+              class="col-1<% if (!col.opened) { %> unopened<% } %>"
+              id="<%= rowIdx %>_<%= colIdx %>"
+            >
+              <span><% if (col.opened) { %><%= col.value %><% } %></span>
+            </div>
+            <% }); %>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../../dist/main.html'); -%> <%- include('../footers/html-footer');
+-%>
