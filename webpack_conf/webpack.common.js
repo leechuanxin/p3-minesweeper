@@ -3,7 +3,9 @@ const path = require('path');
 
 module.exports = {
   plugins: [
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '../public/css/styles.css',
+    }),
   ],
   output: {
     filename: '[name]-[contenthash].bundle.js',
