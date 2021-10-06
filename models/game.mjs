@@ -22,13 +22,6 @@ export default function initGameModel(sequelize, DataTypes) {
         key: 'id',
       },
     },
-    type: {
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-    gameState: {
-      type: DataTypes.JSON,
-    },
     winnerUserId: {
       allowNull: true,
       type: DataTypes.INTEGER,
@@ -36,6 +29,13 @@ export default function initGameModel(sequelize, DataTypes) {
         model: 'users',
         key: 'id',
       },
+    },
+    type: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    gameState: {
+      type: DataTypes.JSON,
     },
     createdAt: {
       allowNull: false,

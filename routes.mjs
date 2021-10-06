@@ -22,6 +22,7 @@ export default function bindRoutes(app) {
   app.get('/games/new', GamesController.newForm);
   app.post('/games', GamesController.create);
   app.get('/games/:id', GamesController.show);
+  app.get('/games/:id/show', GamesController.showAjax);
 
   app.get('/home', (request, response) => {
     response.render('home');

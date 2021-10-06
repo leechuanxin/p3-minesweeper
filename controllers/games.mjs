@@ -103,9 +103,44 @@ export default function initGamesController(db) {
     }
   };
 
+  const showAjax = async (request, response) => {
+    try {
+      const { id } = request.params;
+      const game = await db.Game.findOne({
+        where: {
+          id,
+        },
+      });
+
+      if (!game) {
+        throw new Error(globals.GAME_NOT_FOUND_ERROR_MESSAGE);
+      }
+
+      const renderedGame = { ...game.dataValues };
+      const gameState = {
+        printedBoard: renderedGame.gameState.printedBoard,
+        player1: renderedGame.gameState.player1,
+        player2: renderedGame.gameState.player2,
+        totalMines: renderedGame.gameState.totalMines,
+        minesLeft: renderedGame.gameState.minesLeft,
+        currentPlayerTurn: renderedGame.gameState.currentPlayerTurn,
+      };
+      renderedGame.gameState = gameState;
+
+      response.send({
+        game: renderedGame,
+      });
+    } catch (error) {
+      response.send({
+        error: error.message,
+      });
+    }
+  };
+
   return {
     newForm,
     create,
     show,
+    showAjax,
   };
 }

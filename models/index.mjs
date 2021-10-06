@@ -39,34 +39,34 @@ db.Game = gameModel(sequelize, Sequelize.DataTypes);
 // allows the use of include with createdGames
 db.User.hasMany(db.Game, {
   as: 'createdGames',
-  foreignKey: 'created_user_id',
+  foreignKey: 'createdUserId',
 });
 
 db.User.hasMany(db.Game, {
   as: 'playedGames',
-  foreignKey: 'player_user_id',
+  foreignKey: 'playerUserId',
 });
 
 db.User.hasMany(db.Game, {
   as: 'wonGames',
-  foreignKey: 'winner_user_id',
+  foreignKey: 'winnerUserId',
 });
 
 // creates a method in the
 // game object that has a user - the creator of the game
 db.Game.belongsTo(db.User, {
   as: 'creator',
-  foreignKey: 'created_user_id',
+  foreignKey: 'createdUserId',
 });
 
 db.Game.belongsTo(db.User, {
   as: 'player',
-  foreignKey: 'player_user_id',
+  foreignKey: 'playerUserId',
 });
 
 db.Game.belongsTo(db.User, {
   as: 'winner',
-  foreignKey: 'winner_user_id',
+  foreignKey: 'winnerUserId',
 });
 
 db.sequelize = sequelize;
