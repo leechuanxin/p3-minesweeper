@@ -1,15 +1,15 @@
 import axios from 'axios';
+import 'regenerator-runtime/runtime';
 import './styles.scss';
 
-console.log('bundle is loaded');
-
-const handleTileClick = (board) => (e) => {
-  console.log('title clicked!');
+const handleTileClick = (board, gameId) => (e) => {
   const targetId = e.currentTarget.id;
   const rowIdx = Number(targetId.split('_')[0]);
   const colIdx = Number(targetId.split('_')[1]);
-  console.log('row:', rowIdx);
-  console.log('col:', colIdx);
+  axios.put(`/games/${gameId}/row/${rowIdx}/col/${colIdx}/update`)
+    .then((response) => {
+      console.log('response.data:', response.data);
+    });
   // if (board[rowIdx][colIdx].value.trim() !== '*') {
   //   updateTurnCount();
   // }
@@ -19,16 +19,33 @@ const handleTileClick = (board) => (e) => {
   // printBoard(board);
 };
 
-const handleTilesClick = (board) => {
+const handleTilesClick = (board, gameId) => {
   const tiles = document.querySelectorAll('.col-1.unopened');
 
   tiles.forEach((tile) => {
-    tile.removeEventListener('click', handleTileClick(board));
-    tile.addEventListener('click', handleTileClick(board));
+    tile.addEventListener('click', handleTileClick(board, gameId));
   });
 };
 
-handleTilesClick(board);
+// Logic
+let board = [];
+const gameIdSpan = document.querySelector('#gameId');
+let gameId = 0;
+if (gameIdSpan) {
+  gameId = Number(gameIdSpan.innerText);
+}
+
+if (gameId !== 0 && !Number.isNaN(gameId)) {
+  axios.get(`/games/${gameId}/show`)
+    .then((response) => {
+      const currentGame = response.data.game;
+      board = currentGame.gameState.printedBoard;
+      handleTilesClick(board, gameId);
+    })
+    .catch((error) => {
+      console.log('error');
+    });
+}
 
 // const GRID_SIZE = 252;
 // const NUMBER_OF_COLS = 12;
