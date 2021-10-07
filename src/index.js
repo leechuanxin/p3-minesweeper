@@ -2,20 +2,27 @@ import axios from 'axios';
 import 'regenerator-runtime/runtime';
 import './styles.scss';
 
-const handleTileClick = (board, gameId) => (e) => {
+const handleTileClick = (board, gameId, canClick, userId) => (e) => {
   const targetId = e.currentTarget.id;
   const rowIdx = Number(targetId.split('_')[0]);
   const colIdx = Number(targetId.split('_')[1]);
-  axios.put(`/games/${gameId}/row/${rowIdx}/col/${colIdx}/update`)
-    .then((response) => {
-      const currentGame = response.data;
-      const { printedBoard } = response.data.gameState;
-      printBoard(printedBoard, gameId, currentGame);
-      printUi(currentGame);
-    })
-    .catch((error) => {
-      console.log('error:', error);
-    });
+  if (canClick.value === true) {
+    canClick.value = false;
+    axios.put(`/games/${gameId}/row/${rowIdx}/col/${colIdx}/update`)
+      .then((response) => {
+        const currentGame = response.data;
+        const { printedBoard } = response.data.gameState;
+        if (userId === currentGame.gameState.currentPlayerTurn) {
+          canClick.value = true;
+        }
+        printBoard(printedBoard, gameId, currentGame, canClick, userId);
+        printUi(currentGame);
+      })
+      .catch((error) => {
+        console.log('error:', error);
+      });
+  }
+
   // if (board[rowIdx][colIdx].value.trim() !== '*') {
   //   updateTurnCount();
   // }
@@ -25,15 +32,15 @@ const handleTileClick = (board, gameId) => (e) => {
   // printBoard(board);
 };
 
-const handleTilesClick = (board, gameId) => {
+const handleTilesClick = (board, gameId, canClick, userId) => {
   const tiles = document.querySelectorAll('.col-1.unopened');
 
   tiles.forEach((tile) => {
-    tile.addEventListener('click', handleTileClick(board, gameId));
+    tile.addEventListener('click', handleTileClick(board, gameId, canClick, userId));
   });
 };
 
-const printBoard = (board, gameId, game) => {
+const printBoard = (board, gameId, game, canClick, userId) => {
   const minesweeper = document.querySelector('#msWrapper');
   minesweeper.classList.add('ms-wrapper');
   minesweeper.innerHTML = '';
@@ -49,6 +56,9 @@ const printBoard = (board, gameId, game) => {
 
       if (!board[i][j].opened) {
         col.classList.add('unopened');
+        if (canClick.value === true) {
+          col.classList.add('can-click');
+        }
         span.innerText = '';
       } else {
         col.classList.remove('unopened');
@@ -98,7 +108,7 @@ const printBoard = (board, gameId, game) => {
     minesweeper.appendChild(row);
   }
 
-  handleTilesClick(board, gameId);
+  handleTilesClick(board, gameId, canClick, userId);
 };
 
 const printUi = (game) => {
@@ -183,10 +193,18 @@ const printUi = (game) => {
 
 // Logic
 let board = [];
+const canClick = {
+  value: false,
+};
 const gameIdSpan = document.querySelector('#gameId');
+const userIdSpan = document.querySelector('#userId');
 let gameId = 0;
+let userId = 0;
 if (gameIdSpan) {
   gameId = Number(gameIdSpan.innerText);
+}
+if (userIdSpan) {
+  userId = Number(userIdSpan.innerText);
 }
 
 if (gameId !== 0 && !Number.isNaN(gameId)) {
@@ -194,7 +212,10 @@ if (gameId !== 0 && !Number.isNaN(gameId)) {
     .then((response) => {
       const currentGame = response.data.game;
       board = currentGame.gameState.printedBoard;
-      printBoard(board, gameId, currentGame);
+      if (userId === currentGame.gameState.currentPlayerTurn) {
+        canClick.value = true;
+      }
+      printBoard(board, gameId, currentGame, canClick, userId);
       printUi(currentGame);
     })
     .catch((error) => {

@@ -70,8 +70,11 @@
     padding: 0;
 
     &.unopened {
-      cursor: pointer;
       background: #fff59d;
+
+      &.can-click {
+        cursor: pointer;
+      }
     }
 
     span {
