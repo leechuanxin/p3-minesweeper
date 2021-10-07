@@ -17,6 +17,27 @@ export default function initGamesController(db) {
         const errorMessage = 'You have to be logged in to create a new game!';
         response.render('login', { userInfo: {}, genericSuccess: {}, genericError: { message: errorMessage } });
       } else {
+        const currentGame = await db.Game.findOne({
+          where: {
+            [db.Sequelize.Op.and]: [
+              {
+                [db.Sequelize.Op.or]: [
+                  { createdUserId: request.user.id },
+                  { playerUserId: request.user.id },
+                ],
+              },
+              {
+                winnerUserId: {
+                  [db.Sequelize.Op.eq]: null,
+                },
+              },
+            ],
+          },
+        });
+
+        if (currentGame) {
+          throw new Error(globals.GAME_CANT_CREATE_WHEN_ANOTHER_GAME);
+        }
         // create board
         const board = [];
         const boardWithGrid = util.setBoardGrid(
@@ -68,7 +89,11 @@ export default function initGamesController(db) {
         response.redirect(`/games/${game.id}`);
       }
     } catch (error) {
-      response.send(`error: ${error.stack}`);
+      if (error.message === globals.GAME_CANT_CREATE_WHEN_ANOTHER_GAME) {
+        response.status(401).send(`Error 401: ${error.message}`);
+      } else {
+        response.send(`Error: ${error.message}`);
+      }
     }
   };
 
