@@ -27,6 +27,37 @@ const handleTilesClick = (board, gameId) => {
   });
 };
 
+const printBoard = (board, gameId) => {
+  const minesweeper = document.querySelector('#msWrapper');
+  minesweeper.classList.add('ms-wrapper');
+  minesweeper.innerHTML = '';
+  // print columns
+  for (let i = 0; i < board.length; i += 1) {
+    const row = document.createElement('div');
+    row.className = 'row';
+    for (let j = 0; j < board[0].length; j += 1) {
+      const col = document.createElement('div');
+      col.className = 'col-1';
+      const span = document.createElement('span');
+      col.id = `${i}_${j}`;
+
+      if (!board[i][j].opened) {
+        col.classList.add('unopened');
+        span.innerText = '';
+      } else {
+        col.classList.remove('unopened');
+        span.innerText = board[i][j].value;
+      }
+
+      col.appendChild(span);
+      row.appendChild(col);
+    }
+    minesweeper.appendChild(row);
+  }
+
+  handleTilesClick(board, gameId);
+};
+
 // Logic
 let board = [];
 const gameIdSpan = document.querySelector('#gameId');
@@ -40,7 +71,7 @@ if (gameId !== 0 && !Number.isNaN(gameId)) {
     .then((response) => {
       const currentGame = response.data.game;
       board = currentGame.gameState.printedBoard;
-      handleTilesClick(board, gameId);
+      printBoard(board, gameId);
     })
     .catch((error) => {
       console.log('error');

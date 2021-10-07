@@ -10,23 +10,10 @@ include('../nav/navbar', { user: user, showButton: true, pageState:
       </p>
       <hr />
     </div>
-    <h1 class="text-center">Turn Count: <span id="turnCount">1</span></h1>
+    <h1 class="text-center">Turn Count: <span id="turnCount">0</span></h1>
     <div class="container">
       <div class="row">
-        <div id="msWrapper" class="ms-wrapper col-8 m-auto">
-          <% game.gameState.printedBoard.forEach((row, rowIdx) => { %>
-          <div class="row">
-            <% row.forEach((col, colIdx) => { %>
-            <div
-              class="col-1<% if (!col.opened) { %> unopened<% } %>"
-              id="<%= rowIdx %>_<%= colIdx %>"
-            >
-              <span><% if (col.opened) { %><%= col.value %><% } %></span>
-            </div>
-            <% }); %>
-          </div>
-          <% }); %>
-        </div>
+        <div id="msWrapper" class="ms-wrapper col-8 m-auto"></div>
       </div>
     </div>
   </div>

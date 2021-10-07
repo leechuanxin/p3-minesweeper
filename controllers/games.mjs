@@ -93,16 +93,7 @@ export default function initGamesController(db) {
         title = '2 Player Game';
       }
 
-      const renderedGame = { ...game.dataValues };
-      const gameState = {
-        printedBoard: renderedGame.gameState.printedBoard,
-        player1: renderedGame.gameState.player1,
-        player2: renderedGame.gameState.player2,
-        totalMines: renderedGame.gameState.totalMines,
-        minesLeft: renderedGame.gameState.minesLeft,
-        currentPlayerTurn: renderedGame.gameState.currentPlayerTurn,
-      };
-      renderedGame.gameState = gameState;
+      const renderedGame = { id: game.dataValues.id };
 
       response.render('games/show', { user, game: renderedGame, title });
     } catch (error) {
