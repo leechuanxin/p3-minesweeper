@@ -50,7 +50,11 @@ const printBoard = (board, gameId) => {
         span.innerText = '';
       } else {
         col.classList.remove('unopened');
-        span.innerText = board[i][j].value;
+        if (board[i][j].value === '*') {
+          span.innerHTML = "<i class='fas fa-flag'></i>";
+        } else {
+          span.innerText = board[i][j].value;
+        }
       }
 
       col.appendChild(span);
