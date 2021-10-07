@@ -141,3 +141,95 @@
     }
   }
 }
+
+.text-truncated {
+  /* Ellipsis */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.square-image-wrapper {
+  display: block;
+  position: relative;
+  width: 120px;
+  margin: 0 auto;
+}
+
+.square-image {
+  display: block;
+  padding-bottom: 100%;
+  overflow: hidden;
+  position: relative;
+  box-sizing: content-box;
+  width: 100%;
+
+  &.circle {
+    border-radius: 50%;
+    background: #fff;
+  }
+}
+
+.square-image img {
+  position: absolute;
+  object-fit: cover;
+  height: auto;
+  min-height: 100%;
+  left: 0;
+  top: 0;
+  border: 0;
+  width: 100%;
+}
+
+.divider {
+  width: 100%;
+}
+
+.counter-container {
+  background: #fff;
+}
+
+.player1-profile {
+  background-color: #f1f8e9;
+  border: 1px solid #8bc34a;
+
+  span,
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #558b2f;
+  }
+
+  .divider {
+    border-bottom: 1px solid #8bc34a;
+  }
+
+  .square-image-wrapper {
+    .circle {
+      border: 1px solid #8bc34a;
+    }
+  }
+
+  .counter-container {
+    border: 1px solid #8bc34a;
+
+    div:first-child,
+    div:nth-child(3) {
+      border-right: 1px solid #8bc34a;
+    }
+
+    div:first-child,
+    div:nth-child(2) {
+      border-bottom: 1px solid #8bc34a;
+    }
+
+    i.far,
+    i.fas {
+      color: #8bc34a;
+    }
+  }
+}

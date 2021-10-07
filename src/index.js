@@ -11,6 +11,7 @@ const handleTileClick = (board, gameId) => (e) => {
       const currentGame = response.data;
       const { printedBoard } = response.data.gameState;
       printBoard(printedBoard, gameId, currentGame);
+      printUi(currentGame);
     })
     .catch((error) => {
       console.log('error:', error);
@@ -100,6 +101,86 @@ const printBoard = (board, gameId, game) => {
   handleTilesClick(board, gameId);
 };
 
+const printUi = (game) => {
+  const loggedInUserId = Number(document.querySelector('#userId').innerText);
+  const profileWrapper = document.querySelector('#profileWrapper');
+  profileWrapper.classList.add('profile-wrapper');
+  profileWrapper.innerHTML = '';
+  const { player1 } = game.gameState;
+  const { player2 } = game.gameState;
+  const player1ImageSeed = player1
+    .realName
+    .toLowerCase()
+    .split(' ')
+    .join('-')
+    .split("'")
+    .join('-')
+    .concat(`-${player1.id}`);
+  let player2ImageSeed = player2 ? player2.realName : '';
+  const player2Id = player2 ? player2.id : 0;
+  player2ImageSeed = player2ImageSeed
+    .toLowerCase()
+    .split(' ')
+    .join('-')
+    .split("'")
+    .join('-')
+    .concat(`-${player2Id}`);
+  const player1Image = `https://avatars.dicebear.com/api/gridy/${player1ImageSeed}.svg`;
+  const player2Image = `https://avatars.dicebear.com/api/gridy/${player2ImageSeed}.svg`;
+  let player1TurnText = '';
+
+  if (loggedInUserId === player1.id && game.gameState.currentPlayerTurn === loggedInUserId) {
+    player1TurnText = "It's your turn now! Please make a move.";
+  } else if (game.gameState.currentPlayerTurn === player1.id) {
+    player1TurnText = `Waiting for ${player1.realName} to make a move...`;
+  }
+
+  profileWrapper.innerHTML = `
+    <div class="player1-profile p-3">
+      <span class="square-image-wrapper mb-3">
+        <span class="square-image circle">
+          <img src="${player1Image}" />
+        </span>
+      </span>
+      <p class="text-center text-truncated mb-3">
+        <strong>${player1.realName}</strong>
+      </p>
+      <div class="divider"></div>
+      <p class="text-center pt-1 pb-1 mt-3 mb-3">${player1TurnText}</p>
+      <div class="divider"></div>
+      <div class="row mt-3">
+        <div class="col-10 m-auto">
+          <div class="row counter-container">
+            <div class="col-4 p-2 text-center">
+              <span>
+                <i class="fas fa-flag"></i>
+              </span>
+            </div>
+            <div class="col-8 p-2 text-center">
+              <span>
+                <strong>${player1.flagCount}</strong>
+              </span>
+            </div>
+            <div class="col-4 p-2 text-center">
+              <span>
+                <i class="far fa-clock"></i>
+              </span>
+            </div>
+            <div class="col-8 p-2 text-center">
+              <span>
+                <strong>${player1.turnCount}</strong>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  console.log('print ui:', game);
+  console.log('player 1 image:', player1Image);
+  console.log('player 2 image:', player2Image);
+};
+
 // Logic
 let board = [];
 const gameIdSpan = document.querySelector('#gameId');
@@ -114,6 +195,7 @@ if (gameId !== 0 && !Number.isNaN(gameId)) {
       const currentGame = response.data.game;
       board = currentGame.gameState.printedBoard;
       printBoard(board, gameId, currentGame);
+      printUi(currentGame);
     })
     .catch((error) => {
       console.log('error:', error);

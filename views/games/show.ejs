@@ -2,7 +2,8 @@
 include('../nav/navbar', { user: user, showButton: true, pageState:
 "createGame"}); -%>
 <span id="gameId" class="d-none"><%= game.id %></span>
-<div class="container-fluid pt-5">
+<span id="userId" class="d-none"><%= user ? user.id : 0 %></span>
+<div class="container-fluid pt-5 pb-5">
   <div class="row w-100 pt-3">
     <div class="col-12 pt-1">
       <p class="mb-0">

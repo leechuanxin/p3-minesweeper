@@ -139,7 +139,7 @@ export default function initGamesController(db) {
     }
   };
 
-  const getOpenTiles = (gameState, row, col, currentPlayerId) => {
+  const getOpenTiles = (gameState, row, col, currentPlayer) => {
     // base cases
     if (
       row < 0
@@ -158,38 +158,43 @@ export default function initGamesController(db) {
     // number or mine
     if (gameState.board[row][col].value.trim() !== '') {
       gameState.board[row][col].opened = true;
-      gameState.board[row][col].opened_by = currentPlayerId;
+      gameState.board[row][col].opened_by = currentPlayer.id;
       gameState.printedBoard[row][col].opened = true;
-      gameState.printedBoard[row][col].opened_by = currentPlayerId;
+      gameState.printedBoard[row][col].opened_by = currentPlayer.id;
       gameState.printedBoard[row][col].value = gameState.board[row][col].value;
       if (gameState.board[row][col].value.trim() === '*') {
         gameState.minesLeft -= 1;
+        if (currentPlayer.id === gameState.player1.id) {
+          gameState.player1.flagCount += 1;
+        } else if (currentPlayer.id === gameState.player2.id) {
+          gameState.player2.flagCount += 1;
+        }
       }
       return;
     }
 
     gameState.board[row][col].opened = true;
-    gameState.board[row][col].opened_by = currentPlayerId;
+    gameState.board[row][col].opened_by = currentPlayer.id;
     gameState.printedBoard[row][col].opened = true;
-    gameState.printedBoard[row][col].opened_by = currentPlayerId;
+    gameState.printedBoard[row][col].opened_by = currentPlayer.id;
     gameState.printedBoard[row][col].value = gameState.board[row][col].value;
 
     // go top
-    getOpenTiles(gameState, row - 1, col, currentPlayerId);
+    getOpenTiles(gameState, row - 1, col, currentPlayer);
     // go bottom
-    getOpenTiles(gameState, row + 1, col, currentPlayerId);
+    getOpenTiles(gameState, row + 1, col, currentPlayer);
     // go left
-    getOpenTiles(gameState, row, col - 1, currentPlayerId);
+    getOpenTiles(gameState, row, col - 1, currentPlayer);
     // go right
-    getOpenTiles(gameState, row, col + 1, currentPlayerId);
+    getOpenTiles(gameState, row, col + 1, currentPlayer);
     // go top-left
-    getOpenTiles(gameState, row - 1, col - 1, currentPlayerId);
+    getOpenTiles(gameState, row - 1, col - 1, currentPlayer);
     // go top-right
-    getOpenTiles(gameState, row - 1, col + 1, currentPlayerId);
+    getOpenTiles(gameState, row - 1, col + 1, currentPlayer);
     // go bottom-left
-    getOpenTiles(gameState, row + 1, col - 1, currentPlayerId);
+    getOpenTiles(gameState, row + 1, col - 1, currentPlayer);
     // go bottom-right
-    getOpenTiles(gameState, row + 1, col + 1, currentPlayerId);
+    getOpenTiles(gameState, row + 1, col + 1, currentPlayer);
   };
 
   const update = async (request, response) => {
@@ -246,7 +251,7 @@ export default function initGamesController(db) {
         }
       }
 
-      getOpenTiles(game.gameState, rowId, colId, currentPlayer.id);
+      getOpenTiles(game.gameState, rowId, colId, currentPlayer);
 
       const gameToUpdate = {
         ...game,
