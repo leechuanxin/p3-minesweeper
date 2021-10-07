@@ -248,7 +248,7 @@ export default function initGamesController(db) {
 
       getOpenTiles(game.gameState, rowId, colId, currentPlayer.id);
 
-      const updatedGame = {
+      const gameToUpdate = {
         ...game,
         gameState: {
           board: game.gameState.board,
@@ -262,26 +262,27 @@ export default function initGamesController(db) {
         updatedAt: new Date(),
       };
 
-      const printGame = await db.Game.update(
-        updatedGame,
+      const updatedGame = await db.Game.update(
+        gameToUpdate,
         {
           where: { id: gameId },
           returning: true,
         },
       );
 
-      // console.log('print game:', printGame);
-      console.log('print game:', printGame[1].dataValues);
-      console.log('');
+      const printedGame = {
+        ...updatedGame[1][0].dataValues,
+        gameState: {
+          printedBoard: updatedGame[1][0].gameState.printedBoard,
+          player1: updatedGame[1][0].gameState.player1,
+          player2: updatedGame[1][0].gameState.player2,
+          totalMines: updatedGame[1][0].gameState.totalMines,
+          minesLeft: updatedGame[1][0].gameState.minesLeft,
+          currentPlayerTurn: updatedGame[1][0].gameState.currentPlayerTurn,
+        },
+      };
 
-      // if (board[rowIdx][colIdx].value.trim() !== '*') {
-      //   updateTurnCount();
-      // }
-
-      // // open tiles
-      // getOpenTiles(board, rowIdx, colIdx);
-      // printBoard(board);
-      response.send('success!');
+      response.send(printedGame);
     } catch (error) {
       response.send({
         error: error.message,

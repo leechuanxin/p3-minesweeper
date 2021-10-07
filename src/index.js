@@ -8,7 +8,11 @@ const handleTileClick = (board, gameId) => (e) => {
   const colIdx = Number(targetId.split('_')[1]);
   axios.put(`/games/${gameId}/row/${rowIdx}/col/${colIdx}/update`)
     .then((response) => {
-      console.log('response.data:', response.data);
+      const { printedBoard } = response.data.gameState;
+      printBoard(printedBoard, gameId);
+    })
+    .catch((error) => {
+      console.log('error:', error);
     });
   // if (board[rowIdx][colIdx].value.trim() !== '*') {
   //   updateTurnCount();
@@ -74,7 +78,7 @@ if (gameId !== 0 && !Number.isNaN(gameId)) {
       printBoard(board, gameId);
     })
     .catch((error) => {
-      console.log('error');
+      console.log('error:', error);
     });
 }
 
