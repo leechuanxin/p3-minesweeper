@@ -8,8 +8,9 @@ const handleTileClick = (board, gameId) => (e) => {
   const colIdx = Number(targetId.split('_')[1]);
   axios.put(`/games/${gameId}/row/${rowIdx}/col/${colIdx}/update`)
     .then((response) => {
+      const currentGame = response.data;
       const { printedBoard } = response.data.gameState;
-      printBoard(printedBoard, gameId);
+      printBoard(printedBoard, gameId, currentGame);
     })
     .catch((error) => {
       console.log('error:', error);
@@ -31,7 +32,7 @@ const handleTilesClick = (board, gameId) => {
   });
 };
 
-const printBoard = (board, gameId) => {
+const printBoard = (board, gameId, game) => {
   const minesweeper = document.querySelector('#msWrapper');
   minesweeper.classList.add('ms-wrapper');
   minesweeper.innerHTML = '';
@@ -50,10 +51,43 @@ const printBoard = (board, gameId) => {
         span.innerText = '';
       } else {
         col.classList.remove('unopened');
+        if (board[i][j].opened_by === game.gameState.player1.id) {
+          col.classList.add('player1-opened');
+        } else {
+          col.classList.add('player2-opened');
+        }
         if (board[i][j].value === '*') {
           span.innerHTML = "<i class='fas fa-flag'></i>";
         } else {
-          span.innerText = board[i][j].value;
+          span.innerHTML = `<strong>${board[i][j].value}</strong>`;
+          switch (board[i][j].value) {
+            case '1':
+              span.classList.add('opened-1');
+              break;
+            case '2':
+              span.classList.add('opened-2');
+              break;
+            case '3':
+              span.classList.add('opened-3');
+              break;
+            case '4':
+              span.classList.add('opened-4');
+              break;
+            case '5':
+              span.classList.add('opened-5');
+              break;
+            case '6':
+              span.classList.add('opened-6');
+              break;
+            case '7':
+              span.classList.add('opened-7');
+              break;
+            case '8':
+              span.classList.add('opened-8');
+              break;
+            default:
+              break;
+          }
         }
       }
 
@@ -79,7 +113,7 @@ if (gameId !== 0 && !Number.isNaN(gameId)) {
     .then((response) => {
       const currentGame = response.data.game;
       board = currentGame.gameState.printedBoard;
-      printBoard(board, gameId);
+      printBoard(board, gameId, currentGame);
     })
     .catch((error) => {
       console.log('error:', error);

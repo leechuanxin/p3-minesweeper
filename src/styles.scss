@@ -74,6 +74,59 @@
       background: #fff59d;
     }
 
+    span {
+      &.opened-1 {
+        color: #0d47a1;
+      }
+
+      &.opened-2 {
+        color: #1b5e20;
+      }
+
+      &.opened-3 {
+        color: #b71c1c;
+      }
+
+      &.opened-4 {
+        color: #4a148c;
+      }
+
+      &.opened-5 {
+        color: #880e4f;
+      }
+
+      &.opened-6 {
+        color: #004d40;
+      }
+
+      &.opened-7 {
+        color: #212121;
+      }
+
+      &.opened-8 {
+        color: #455a64;
+      }
+    }
+
+    &.player1-opened {
+      background: #ffebee;
+
+      span {
+        i.fas {
+          color: #f44336;
+        }
+      }
+    }
+
+    &.player2-opened {
+      background: #e3f2fd;
+      span {
+        i.fas {
+          color: #2196f3;
+        }
+      }
+    }
+
     &:after {
       content: "";
       display: block;
