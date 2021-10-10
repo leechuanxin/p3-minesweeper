@@ -264,15 +264,17 @@ export default function initGamesController(db) {
       const { currentPlayerTurn } = game.gameState;
       let currentPlayer = {};
       let otherPlayer = {};
-      let nextPlayerTurn = 0;
+      let nextPlayerTurn = -1;
       const { board } = game.gameState;
 
       // determine current player
       if (currentPlayerTurn === game.gameState.player1.id) {
         currentPlayer = game.gameState.player1;
-        otherPlayer = game.gameState.player2;
+        if (game.gameState.player2) {
+          otherPlayer = game.gameState.player2;
+        }
         nextPlayerTurn = game.gameState.player1.id;
-      } else {
+      } else if (game.gameState.player2 && currentPlayerTurn === game.gameState.player2.id) {
         currentPlayer = game.gameState.player2;
         otherPlayer = game.gameState.player1;
         nextPlayerTurn = game.gameState.player2.id;
@@ -298,7 +300,7 @@ export default function initGamesController(db) {
         // set game as completed
         game.isCompleted = true;
         // remove player turn
-        nextPlayerTurn = 0;
+        nextPlayerTurn = -1;
         // open remaining tiles
         openRemainingTiles(game.gameState);
       }
