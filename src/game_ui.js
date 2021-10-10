@@ -3,9 +3,11 @@ import axios from 'axios';
 // CUSTOM IMPORTS
 import * as cookie from './cookie.js';
 
-export const handleRefresh = (gameId, userId, canClick) => () => {
+export const handleRefresh = (button, gameId, userId, canClick) => () => {
+  button.disabled = true;
   axios.get(`/games/${gameId}/show`)
     .then((response) => {
+      button.disabled = false;
       const currentGame = response.data.game;
       const board = currentGame.gameState.printedBoard;
       if (userId === currentGame.gameState.currentPlayerTurn) {
@@ -17,6 +19,7 @@ export const handleRefresh = (gameId, userId, canClick) => () => {
       printForfeitButton(currentGame, userId, canClick);
     })
     .catch((error) => {
+      button.disabled = false;
       console.log('error:', error);
     });
 };
@@ -313,16 +316,17 @@ export const printForfeitButton = (game, userId, canClick) => {
   const forfeitButtonContainer = document.querySelector('#forfeitButtonContainer');
   // clear forfeit button container first
   forfeitButtonContainer.innerHTML = '';
-  console.log('game is complete status on click:', game.isCompleted);
   if (!game.isCompleted && (userId === game.createdUserId || userId === game.playerUserId)) {
     forfeitButtonContainer.innerHTML = "<button id='forfeitButton' class='btn btn-danger'>Forfeit</button>";
   }
   const button = document.querySelector('#forfeitButton');
   if (button) {
     button.addEventListener('click', () => {
+      button.disabled = true;
       canClick.value = false;
       axios.put(`/games/${game.id}/forfeit`)
         .then((response) => {
+          button.disabled = false;
           const currentGame = response.data;
           const { printedBoard } = response.data.gameState;
           if (userId === currentGame.gameState.currentPlayerTurn) {
@@ -334,6 +338,7 @@ export const printForfeitButton = (game, userId, canClick) => {
           printForfeitButton(currentGame, userId, canClick);
         })
         .catch((error) => {
+          button.disabled = false;
           console.log('error:', error);
         });
     });

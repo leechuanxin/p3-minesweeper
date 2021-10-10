@@ -19,9 +19,9 @@ if (gameIdSpan) {
 }
 
 if (refreshUIButton) {
-  refreshUIButton.addEventListener('click', gameUI.handleRefresh(gameId, userId, canClick));
+  refreshUIButton.addEventListener('click', gameUI.handleRefresh(refreshUIButton, gameId, userId, canClick));
 }
 
 if (gameId !== 0 && !Number.isNaN(gameId)) {
-  (gameUI.handleRefresh(gameId, userId, canClick))();
+  (gameUI.handleRefresh(refreshUIButton, gameId, userId, canClick))();
 }
