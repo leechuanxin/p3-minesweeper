@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as cookie from './cookie.js';
 
 export const handleRefresh = (gameId, userId, canClick) => () => {
-  const button = document.querySelector('#forfeitButton');
+  const button = document.querySelector('#refreshUIButton');
   if (button) {
     button.disabled = true;
   }
