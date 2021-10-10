@@ -271,6 +271,8 @@ export const printGameOverFeedback = (game, userId) => {
   const hasWinner = game.isCompleted;
   let gameOverText = '';
   const gameOverFeedbackCol = document.querySelector('#gameOverFeedbackCol');
+  // remove elements in gameOverFeedbackCol
+  gameOverFeedbackCol.innerHTML = '';
 
   if (hasWinner && game.winnerUserId === userId) {
     // user winner
