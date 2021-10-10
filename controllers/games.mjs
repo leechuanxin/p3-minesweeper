@@ -313,6 +313,8 @@ export default function initGamesController(db) {
 
       // check win condition
       if (currentPlayer.flagCount === Math.ceil(globals.MINE_COUNT / 2)) {
+        // update turn count
+        currentPlayer.turnCount += 1;
         // set winner
         game.winnerUserId = currentPlayer.id;
         // remove player turn
