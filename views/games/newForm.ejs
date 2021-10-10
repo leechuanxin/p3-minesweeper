@@ -12,8 +12,51 @@ include('../nav/navbar', { user: user, showButton: true, pageState:
     <div class="col-12 py-3">
       <form action="/games" method="POST">
         <div class="row">
-          <div class="col-12">
-            <h4 class="mb-3 index-header">Create a New Game!</h4>
+          <div class="col-12 mb-3">
+            <div class="d-flex align-items-center">
+              <h4 class="mb-0 d-inline-block me-3">Create a New Game!</h4>
+              <button
+                type="button"
+                class="btn btn-info info-button"
+                data-bs-toggle="modal"
+                data-bs-target="#infoModal"
+              >
+                <i class="fas fa-question"></i>
+              </button>
+              <div
+                class="modal fade"
+                id="infoModal"
+                tabindex="-1"
+                aria-labelledby="infoModal"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">
+                        Game Rules
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <p>
+                        <strong>Practice Mode (1-Player):</strong> Try to flag
+                        26 mines in as few turns as possible!
+                      </p>
+                      <p>
+                        <strong>2-Player Game:</strong> The first to flag 26
+                        mines win!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="col-12">
             <p class="mt-3">
