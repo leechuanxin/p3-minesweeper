@@ -102,7 +102,6 @@ export default function initGamesController(db) {
       const { id } = request.params;
       const { user } = request;
       let title = '';
-      const gameOverUserStatus = '';
       const game = await db.Game.findOne({
         where: {
           id,
@@ -297,7 +296,7 @@ export default function initGamesController(db) {
         // set winner
         game.winnerUserId = currentPlayer.id;
         // remove player turn
-        game.gameState.currentPlayerTurn = 0;
+        nextPlayerTurn = 0;
         // open remaining tiles
         openRemainingTiles(game.gameState);
       }

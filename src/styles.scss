@@ -201,6 +201,26 @@
   background: #fff;
 }
 
+.player1-profile,
+.player2-profile {
+  position: relative;
+}
+
+.player1-arrow,
+.player2-arrow {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3em;
+  z-index: 2;
+  div {
+    i {
+      transform: rotate(135deg);
+    }
+  }
+}
+
 .player1-profile {
   background-color: #f1f8e9;
   border: 1px solid #8bc34a;
@@ -218,6 +238,10 @@
 
   .divider {
     border-bottom: 1px solid #8bc34a;
+  }
+
+  .player1-arrow {
+    color: #558b2f;
   }
 
   .square-image-wrapper {

@@ -145,6 +145,20 @@ export const printUi = (game) => {
   const player2Image = `https://avatars.dicebear.com/api/gridy/${player2ImageSeed}.svg`;
   let player1TurnText = '';
   const minesLeftText = game.gameState.minesLeft;
+  const { currentPlayerTurn } = game.gameState;
+  let player1TurnArrowDisplay = '';
+  let player2TurnArrowDisplay = '';
+
+  if (currentPlayerTurn === player1.id) {
+    player1TurnArrowDisplay = '';
+    player2TurnArrowDisplay = ' d-none';
+  } else if (player2 && currentPlayerTurn === player2.id) {
+    player1TurnArrowDisplay = ' d-none';
+    player2TurnArrowDisplay = '';
+  } else {
+    player1TurnArrowDisplay = ' d-none';
+    player2TurnArrowDisplay = ' d-none';
+  }
 
   if (loggedInUserId === player1.id && game.winnerUserId === player1.id) {
     player1TurnText = 'You have won this game!';
@@ -162,6 +176,11 @@ export const printUi = (game) => {
 
   profileWrapper.innerHTML = `
     <div class="player1-profile ps-3 pe-3 pt-3 pb-5">
+      <div class="player1-arrow${player1TurnArrowDisplay}">
+        <div class="animate__animated animate__bounce animate__infinite">
+          <i class="fas fa-location-arrow"></i>
+        </div>
+      </div>
       <span class="square-image-wrapper mb-3">
         <span class="square-image circle">
           <img src="${player1Image}" />
