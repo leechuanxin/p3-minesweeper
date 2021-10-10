@@ -102,7 +102,7 @@ export default function initGamesController(db) {
       const { id } = request.params;
       const { user } = request;
       let title = '';
-      let gameOverUserStatus = '';
+      const gameOverUserStatus = '';
       const game = await db.Game.findOne({
         where: {
           id,
@@ -119,29 +119,8 @@ export default function initGamesController(db) {
         title = '2 Player Game';
       }
 
-      if (request.user && game.dataValues.winnerUserId === request.user.id) {
-        gameOverUserStatus = 'userWinner';
-      } else if (
-        request.user
-        && game.dataValues.winnerUserId !== request.user.id
-        && (
-          request.user.id === game.dataValues.gameState.player1.id
-          || (
-            game.dataValues.gameState.player2
-            && request.user.id === game.dataValues.gameState.player2.id
-          )
-        )
-      ) {
-        gameOverUserStatus = 'userLoser';
-      }
-
-      const hasWinner = (typeof game.dataValues.winnerUserId === 'number');
-
       const renderedGame = {
         id: game.dataValues.id,
-        winnerUserId: game.dataValues.winnerUserId,
-        hasWinner,
-        gameOverUserStatus,
       };
 
       response.render('games/show', { user, game: renderedGame, title });
