@@ -20,11 +20,14 @@ include('../nav/navbar', { user: user, showButton: true, pageState:
         <div class="col-6">
           <button
             type="button"
-            class="btn btn-info info-button"
+            class="btn btn-info info-button me-3"
             data-bs-toggle="modal"
             data-bs-target="#infoModal"
           >
             <i class="fas fa-question"></i>
+          </button>
+          <button id="refreshUIButton" type="button" class="btn btn-primary">
+            Refresh UI
           </button>
           <div
             class="modal fade"

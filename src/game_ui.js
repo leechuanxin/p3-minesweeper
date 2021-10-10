@@ -3,6 +3,24 @@ import axios from 'axios';
 // CUSTOM IMPORTS
 import * as cookie from './cookie.js';
 
+export const handleRefresh = (gameId, userId, canClick) => () => {
+  axios.get(`/games/${gameId}/show`)
+    .then((response) => {
+      const currentGame = response.data.game;
+      const board = currentGame.gameState.printedBoard;
+      if (userId === currentGame.gameState.currentPlayerTurn) {
+        canClick.value = true;
+      }
+      printBoard(board, gameId, currentGame, canClick, userId);
+      printUi(currentGame);
+      printGameOverFeedback(currentGame, userId);
+      printForfeitButton(currentGame, userId, canClick);
+    })
+    .catch((error) => {
+      console.log('error:', error);
+    });
+};
+
 export const handleTileClick = (board, gameId, canClick, userId) => (e) => {
   const targetId = e.currentTarget.id;
   const rowIdx = Number(targetId.split('_')[0]);
