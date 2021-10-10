@@ -217,12 +217,22 @@ export const printUi = (game) => {
     player2TurnText = 'You have lost this game!';
   } else if (game.isCompleted) {
     player2TurnText = `${player2.realName} has lost this game!`;
-  } else if (game.type === 'twoplayer' && !game.playerUserId) {
+  } else if (loggedInUserId !== game.createdUserId && game.type === 'twoplayer' && !game.playerUserId) {
     player2TurnText = `This could be you! Join this game to challenge ${player1.realName}!`;
-    player2JoinButton = '<div class="text-center mb-3"><button id="joinGameButton" class="btn btn-success">Join Game</button></div>';
-  } else if (loggedInUserId === player2.id && game.gameState.currentPlayerTurn === loggedInUserId) {
+    if (loggedInUserId) {
+      player2JoinButton = '<div class="text-center mb-3"><button id="joinGameButton" class="btn btn-success">Join Game</button></div>';
+    }
+  } else if (
+    player2
+    && player2.id
+    && loggedInUserId === player2.id
+    && game.gameState.currentPlayerTurn === loggedInUserId) {
     player2TurnText = "It's your turn now! Please make a move.";
-  } else if (game.gameState.currentPlayerTurn === player2.id) {
+  } else if (
+    player2
+    && player2.id
+    && game.gameState.currentPlayerTurn === player2.id
+  ) {
     player2TurnText = `Waiting for ${player2.realName} to make a move...`;
   }
 
