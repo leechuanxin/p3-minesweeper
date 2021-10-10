@@ -69,13 +69,24 @@ include('../nav/navbar', { user: user, showButton: true, pageState:
                 name="type"
                 id="practiceMode"
                 value="practice"
-                checked
               />
               <label class="form-check-label" for="practiceMode">
                 Practice Mode (1-Player)
               </label>
             </div>
-            <div class="invalid-feedback"></div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="type"
+                id="twoPlayer"
+                value="twoplayer"
+                checked
+              />
+              <label class="form-check-label" for="twoPlayer">
+                2-Player Game
+              </label>
+            </div>
           </div>
         </div>
         <hr class="mb-4" />

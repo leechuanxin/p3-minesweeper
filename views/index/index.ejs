@@ -77,26 +77,7 @@ include('../nav/navbar', { user: user, showButton: true, pageState: "home"});
           <hr />
           <div class="d-flex justify-content-center">
             <a
-              class="
-                btn
-                <%
-                if
-                (user
-                &&
-                user.id
-                &&
-                user.id
-                ===
-                game.gameState.player1.id)
-                {
-                %>btn-success<%
-                }
-                else
-                {
-                %>btn-primary<%
-                }
-                %>
-              "
+              class="btn btn-primary"
               href="/games/<%= game.id %>"
               role="button"
             >
@@ -106,7 +87,46 @@ include('../nav/navbar', { user: user, showButton: true, pageState: "home"});
           </div>
         </div>
       </div>
-      <% } else { %> It is not practice <% } %> <% }); %> <% } %>
+      <% } else { %>
+      <div class="mt-3">
+        <div class="two-player-game-card game-card col-10 p-3 m-auto">
+          <div class="d-flex justify-content-center align-items-center">
+            <div>
+              <span class="square-image-wrapper">
+                <span class="square-image circle">
+                  <img src="https://avatars.dicebear.com/api/gridy/<%=
+                  game.gameState.player1.realName.toLowerCase().split(' ')
+                  .join('-').split("'").join('-').concat('-')
+                  .concat(game.gameState.player1.id) %>.svg" />
+                </span>
+              </span>
+            </div>
+            <p class="ms-3 fs-4 mb-0 text-truncated">
+              <strong><%= game.gameState.player1.realName %></strong>
+            </p>
+          </div>
+          <p class="text-center">
+            <em>... waiting for a new challenger!</em>
+          </p>
+          <div class="mt-3 d-flex justify-content-center">
+            <p class="mb-0">
+              <span class="badge rounded-pill bg-warning">2-Player Game</span>
+            </p>
+          </div>
+          <hr />
+          <div class="d-flex justify-content-center">
+            <a
+              class="btn btn-primary"
+              href="/games/<%= game.id %>"
+              role="button"
+            >
+              <% if (user && user.id && user.id === game.gameState.player1.id) {
+              %> Continue Your Game <% } else { %> Spectate Game <% } %>
+            </a>
+          </div>
+        </div>
+      </div>
+      <% } %> <% }); %> <% } %>
     </div>
   </div>
 </div>

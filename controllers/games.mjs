@@ -70,7 +70,7 @@ export default function initGamesController(db) {
           player2: null,
           totalMines: globals.MINE_COUNT,
           minesLeft: globals.MINE_COUNT,
-          currentPlayerTurn: request.user.id,
+          currentPlayerTurn: (request.body.type === 'practice') ? request.user.id : -1,
         };
 
         // initialize new game

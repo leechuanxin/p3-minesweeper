@@ -171,8 +171,10 @@ export const printUi = (game) => {
     .join('-')
     .concat(`-${player2Id}`);
   const player1Image = `https://avatars.dicebear.com/api/gridy/${player1ImageSeed}.svg`;
-  const player2Image = `https://avatars.dicebear.com/api/gridy/${player2ImageSeed}.svg`;
+  const player2Image = (player2Id === 0) ? 'https://avatars.dicebear.com/api/pixel-art-neutral/0.svg' : `https://avatars.dicebear.com/api/gridy/${player2ImageSeed}.svg`;
   let player1TurnText = '';
+  let player2TurnText = '';
+  let player2JoinButton = '';
   const minesLeftText = game.gameState.minesLeft;
   const { currentPlayerTurn } = game.gameState;
   let player1TurnArrowDisplay = '';
@@ -197,10 +199,31 @@ export const printUi = (game) => {
     player1TurnText = 'You have lost this game!';
   } else if (game.isCompleted) {
     player1TurnText = `${player1.realName} has lost this game!`;
+  } else if (loggedInUserId === player1.id && game.type === 'twoplayer' && !game.playerUserId) {
+    player1TurnText = 'Please be patient and wait for another player to join the game!';
+  } else if (game.type === 'twoplayer' && !game.playerUserId) {
+    player1TurnText = `${player1.realName} is waiting for another player to join the game...`;
   } else if (loggedInUserId === player1.id && game.gameState.currentPlayerTurn === loggedInUserId) {
     player1TurnText = "It's your turn now! Please make a move.";
   } else if (game.gameState.currentPlayerTurn === player1.id) {
     player1TurnText = `Waiting for ${player1.realName} to make a move...`;
+  }
+
+  if (game.isCompleted && loggedInUserId === player2.id && game.winnerUserId === player2.id) {
+    player2TurnText = 'You have won this game!';
+  } else if (game.isCompleted && game.winnerUserId === player2.id) {
+    player2TurnText = `${player2.realName} has won this game!`;
+  } else if (game.isCompleted && loggedInUserId === player2.id) {
+    player2TurnText = 'You have lost this game!';
+  } else if (game.isCompleted) {
+    player2TurnText = `${player2.realName} has lost this game!`;
+  } else if (game.type === 'twoplayer' && !game.playerUserId) {
+    player2TurnText = `This could be you! Join this game to challenge ${player1.realName}!`;
+    player2JoinButton = '<div class="text-center mb-3"><button id="joinGameButton" class="btn btn-success">Join Game</button></div>';
+  } else if (loggedInUserId === player2.id && game.gameState.currentPlayerTurn === loggedInUserId) {
+    player2TurnText = "It's your turn now! Please make a move.";
+  } else if (game.gameState.currentPlayerTurn === player2.id) {
+    player2TurnText = `Waiting for ${player2.realName} to make a move...`;
   }
 
   profileWrapper.innerHTML = `
@@ -272,6 +295,56 @@ export const printUi = (game) => {
       </div>
     </div>
   `;
+
+  if (game.type === 'twoplayer') {
+    profileWrapper.innerHTML += `
+      <div class="player2-profile ps-3 pe-3 pt-5 pb-5">
+      <div class="player2-arrow${player2TurnArrowDisplay}">
+        <div class="animate__animated animate__bounce animate__infinite">
+          <i class="fas fa-location-arrow"></i>
+        </div>
+      </div>
+      <span class="square-image-wrapper mb-3">
+        <span class="square-image circle">
+          <img src="${player2Image}" />
+        </span>
+      </span>
+      <p class="text-center text-truncated mb-3">
+        <strong>${player2 && player2.realName ? player2.realName : '???'}</strong>
+      </p>
+      <div class="divider"></div>
+      <p class="text-center pt-1 pb-1 mt-3 mb-3">${player2TurnText}</p>
+      ${player2JoinButton}
+      <div class="divider"></div>
+      <div class="row mt-3">
+        <div class="col-10 m-auto">
+          <div class="row counter-container">
+            <div class="col-4 p-2 text-center">
+              <span>
+                <i class="fas fa-flag"></i>
+              </span>
+            </div>
+            <div class="col-8 p-2 text-center">
+              <span>
+                <strong>${player2 && player2.flagCount ? player2.flagCount : 0}</strong>
+              </span>
+            </div>
+            <div class="col-4 p-2 text-center">
+              <span>
+                <i class="far fa-clock"></i>
+              </span>
+            </div>
+            <div class="col-8 p-2 text-center">
+              <span>
+                <strong>${player2 && player2.turnCount ? player2.turnCount : 0}</strong>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+  }
   console.log('print ui:', game);
   console.log('player 1 image:', player1Image);
   console.log('player 2 image:', player2Image);

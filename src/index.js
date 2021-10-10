@@ -1,4 +1,3 @@
-import axios from 'axios';
 import 'regenerator-runtime/runtime';
 import './styles.scss';
 
