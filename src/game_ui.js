@@ -161,8 +161,8 @@ export const printUi = (game) => {
     .split("'")
     .join('-')
     .concat(`-${player1.id}`);
-  let player2ImageSeed = player2 ? player2.realName : '';
-  const player2Id = player2 ? player2.id : 0;
+  let player2ImageSeed = player2 && player2.realName ? player2.realName : '';
+  const player2Id = player2 && player2.id ? player2.id : 0;
   player2ImageSeed = player2ImageSeed
     .toLowerCase()
     .split(' ')
