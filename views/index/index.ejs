@@ -3,7 +3,7 @@ include('../nav/navbar', { user: user, showButton: true, pageState: "home"});
 -%>
 <div class="container-fluid pt-5">
   <div class="row w-100 pt-4 pb-3 px-2">
-    <% if (user && user.id) { %>
+    <% if (user && user.game) { %>
     <div class="col-12">
       <div class="row">
         <div class="col-12 col-md-2"></div>
@@ -11,6 +11,24 @@ include('../nav/navbar', { user: user, showButton: true, pageState: "home"});
           <div class="d-grid">
             <a
               class="btn btn-lg btn-outline-success"
+              href="/games/<%= user.game.id %>"
+              role="button"
+              >Continue Your Previous Game</a
+            >
+          </div>
+        </div>
+        <div class="col-12 col-md-2"></div>
+      </div>
+      <hr />
+    </div>
+    <% } else if (user && !user.game) { %>
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12 col-md-2"></div>
+        <div class="col-12 col-md-8">
+          <div class="d-grid">
+            <a
+              class="btn btn-lg btn-outline-primary"
               href="/games/new"
               role="button"
               >+ Create a New Game</a
@@ -19,7 +37,6 @@ include('../nav/navbar', { user: user, showButton: true, pageState: "home"});
         </div>
         <div class="col-12 col-md-2"></div>
       </div>
-
       <hr />
     </div>
     <% } %>

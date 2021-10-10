@@ -35,6 +35,45 @@ const auth = (db) => async (request, response, next) => {
 
       // set the user as a key in the request object so that it's accessible in the route
       request.user = user.dataValues;
+
+      let currentGame = await db.Game.findOne({
+        where: {
+          [db.Sequelize.Op.and]: [
+            {
+              [db.Sequelize.Op.or]: [
+                { createdUserId: request.user.id },
+                { playerUserId: request.user.id },
+              ],
+            },
+            {
+              isCompleted: {
+                [db.Sequelize.Op.eq]: false,
+              },
+            },
+          ],
+        },
+      });
+
+      if (currentGame) {
+        currentGame = {
+          ...currentGame.dataValues,
+        };
+
+        currentGame = {
+          ...currentGame,
+          gameState: {
+            printedBoard: currentGame.gameState.printedBoard,
+            player1: currentGame.gameState.player1,
+            player2: currentGame.gameState.player2,
+            totalMines: currentGame.gameState.totalMines,
+            minesLeft: currentGame.gameState.minesLeft,
+            currentPlayerTurn: currentGame.gameState.currentPlayerTurn,
+          },
+        };
+      }
+
+      request.user.game = currentGame;
+
       next();
 
       // make sure we don't get down to the next() below

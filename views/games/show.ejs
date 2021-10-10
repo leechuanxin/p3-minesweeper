@@ -1,6 +1,6 @@
 <%- include('../headers/html-header', { title: title }); -%><%-
 include('../nav/navbar', { user: user, showButton: true, pageState:
-"createGame"}); -%>
+"currentGame"}); -%>
 <span id="gameId" class="d-none"><%= game.id %></span>
 <span id="userId" class="d-none"><%= user ? user.id : 0 %></span>
 <div class="container-fluid pt-5 pb-5">

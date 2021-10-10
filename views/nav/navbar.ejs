@@ -59,11 +59,19 @@
             Home
           </a>
         </li>
+        <% if (user && user.game) { %>
+        <li>
+          <a href="/games/<%= user.game.id %>" class="nav-link text-white ps-4 <% if (pageState === "currentGame") { %>active<% } %>"
+            >Your Ongoing Game</a
+          >
+        </li>
+        <% } else if (user) { %>
         <li>
           <a href="/games/new" class="nav-link text-white ps-4 <% if (pageState === "createGame") { %>active<% } %>"
             >Create a New Game</a
           >
         </li>
+        <% } %>
       </ul>
     </div>
   </div>
