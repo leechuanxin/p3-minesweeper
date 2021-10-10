@@ -40,6 +40,7 @@ const auth = (db) => async (request, response, next) => {
       // make sure we don't get down to the next() below
       return;
     }
+
     response.clearCookie('userId');
     response.clearCookie('loggedIn');
     const errorMessage = 'Your session has expired! Please try logging in again.';

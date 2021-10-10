@@ -2,6 +2,22 @@ import axios from 'axios';
 import 'regenerator-runtime/runtime';
 import './styles.scss';
 
+const getCookie = (cname) => {
+  const name = `${cname}=`;
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return '';
+};
+
 const handleTileClick = (board, gameId, canClick, userId) => (e) => {
   const targetId = e.currentTarget.id;
   const rowIdx = Number(targetId.split('_')[0]);
@@ -64,11 +80,22 @@ const printBoard = (board, gameId, game, canClick, userId) => {
         col.classList.remove('unopened');
         if (board[i][j].opened_by === game.gameState.player1.id) {
           col.classList.add('player1-opened');
-        } else {
+        } else if (game.gameState.player2 && board[i][j].opened_by === game.gameState.player2.id) {
           col.classList.add('player2-opened');
+        } else {
+          col.classList.add('game-over-opened');
         }
-        if (board[i][j].value === '*') {
+
+        if (
+          board[i][j].value === '*'
+          && (
+            board[i][j].opened_by === game.gameState.player1.id
+            || (game.gameState.player2 && board[i][j].opened_by === game.gameState.player2.id)
+          )
+        ) {
           span.innerHTML = "<i class='fas fa-flag'></i>";
+        } else if (board[i][j].value === '*') {
+          span.innerHTML = "<i class='fas fa-bomb'></i>";
         } else {
           span.innerHTML = `<strong>${board[i][j].value}</strong>`;
           switch (board[i][j].value) {
@@ -112,7 +139,8 @@ const printBoard = (board, gameId, game, canClick, userId) => {
 };
 
 const printUi = (game) => {
-  const loggedInUserId = Number(document.querySelector('#userId').innerText);
+  const loggedInUserIdText = getCookie('userId');
+  const loggedInUserId = Number(loggedInUserIdText);
   const profileWrapper = document.querySelector('#profileWrapper');
   profileWrapper.classList.add('profile-wrapper');
   profileWrapper.innerHTML = '';
@@ -140,7 +168,15 @@ const printUi = (game) => {
   let player1TurnText = '';
   const minesLeftText = game.gameState.minesLeft;
 
-  if (loggedInUserId === player1.id && game.gameState.currentPlayerTurn === loggedInUserId) {
+  if (loggedInUserId === player1.id && game.winnerUserId === player1.id) {
+    player1TurnText = 'You have won this game!';
+  } else if (game.winnerUserId === player1.id) {
+    player1TurnText = `${player1.realName} has won this game!`;
+  } else if (loggedInUserId === player1.id && game.winnerUserId === player2.id) {
+    player1TurnText = 'You have lost this game!';
+  } else if (game.winnerUserId === player2.id) {
+    player1TurnText = `${player1.realName} has lost this game!`;
+  } else if (loggedInUserId === player1.id && game.gameState.currentPlayerTurn === loggedInUserId) {
     player1TurnText = "It's your turn now! Please make a move.";
   } else if (game.gameState.currentPlayerTurn === player1.id) {
     player1TurnText = `Waiting for ${player1.realName} to make a move...`;
@@ -221,14 +257,10 @@ const canClick = {
   value: false,
 };
 const gameIdSpan = document.querySelector('#gameId');
-const userIdSpan = document.querySelector('#userId');
 let gameId = 0;
-let userId = 0;
+const userId = (getCookie('userId') === '') ? 0 : Number(getCookie('userId'));
 if (gameIdSpan) {
   gameId = Number(gameIdSpan.innerText);
-}
-if (userIdSpan) {
-  userId = Number(userIdSpan.innerText);
 }
 
 if (gameId !== 0 && !Number.isNaN(gameId)) {

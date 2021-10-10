@@ -130,6 +130,15 @@
       }
     }
 
+    &.game-over-opened {
+      background: #ffebee;
+      span {
+        i.fas {
+          color: #f44336;
+        }
+      }
+    }
+
     &:after {
       content: "";
       display: block;

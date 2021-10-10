@@ -11,12 +11,34 @@ include('../nav/navbar', { user: user, showButton: true, pageState:
       </p>
       <hr />
     </div>
+    <% if (game.hasWinner) { %>
     <div class="container">
       <div class="row">
-        <div id="profileWrapper" class="profile-wrapper col-12 col-md-5"></div>
-        <div id="msWrapper" class="ms-wrapper col-12 col-md-7"></div>
+        <div class="col-12">
+          <p class="text-center">
+            <span>
+              <% if (game.gameOverUserStatus === "userWinner") { %> You have won
+              this game, and this game is over! <% } else if
+              (game.gameOverUserStatus === "userLoser") { %>You have lost this
+              game, and this game is over! <% } else { %>This game is over! <% }
+              %> You can
+              <a href="/">view other games here</a><% if (user && user.id) { %>,
+              or <a href="/games/new">start a new game here</a><% } %>.
+            </span>
+          </p>
+        </div>
+      </div>
+      <% } %>
+      <div class="container">
+        <div class="row">
+          <div
+            id="profileWrapper"
+            class="profile-wrapper col-12 col-md-5"
+          ></div>
+          <div id="msWrapper" class="ms-wrapper col-12 col-md-7"></div>
+        </div>
       </div>
     </div>
   </div>
+  <%- include('../footers/html-footer'); -%>
 </div>
-<%- include('../footers/html-footer'); -%>

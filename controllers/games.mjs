@@ -102,6 +102,7 @@ export default function initGamesController(db) {
       const { id } = request.params;
       const { user } = request;
       let title = '';
+      let gameOverUserStatus = '';
       const game = await db.Game.findOne({
         where: {
           id,
@@ -118,7 +119,30 @@ export default function initGamesController(db) {
         title = '2 Player Game';
       }
 
-      const renderedGame = { id: game.dataValues.id };
+      if (request.user && game.dataValues.winnerUserId === request.user.id) {
+        gameOverUserStatus = 'userWinner';
+      } else if (
+        request.user
+        && game.dataValues.winnerUserId !== request.user.id
+        && (
+          request.user.id === game.dataValues.gameState.player1.id
+          || (
+            game.dataValues.gameState.player2
+            && request.user.id === game.dataValues.gameState.player2.id
+          )
+        )
+      ) {
+        gameOverUserStatus = 'userLoser';
+      }
+
+      const hasWinner = (typeof game.dataValues.winnerUserId === 'number');
+
+      const renderedGame = {
+        id: game.dataValues.id,
+        winnerUserId: game.dataValues.winnerUserId,
+        hasWinner,
+        gameOverUserStatus,
+      };
 
       response.render('games/show', { user, game: renderedGame, title });
     } catch (error) {
@@ -222,6 +246,16 @@ export default function initGamesController(db) {
     getOpenTiles(gameState, row + 1, col + 1, currentPlayer);
   };
 
+  const openRemainingTiles = (gameState) => {
+    for (let rowIdx = 0; rowIdx < gameState.board.length; rowIdx += 1) {
+      for (let colIdx = 0; colIdx < gameState.board[0].length; colIdx += 1) {
+        gameState.board[rowIdx][colIdx].opened = true;
+        gameState.printedBoard[rowIdx][colIdx].opened = true;
+        gameState.printedBoard[rowIdx][colIdx].value = gameState.board[rowIdx][colIdx].value;
+      }
+    }
+  };
+
   const update = async (request, response) => {
     try {
       const gameId = request.params.id;
@@ -254,7 +288,6 @@ export default function initGamesController(db) {
       let nextPlayerTurn = 0;
       const { board } = game.gameState;
       const { printedBoard } = game.gameState;
-      const { minesLeft } = game.gameState;
 
       // determine current player
       if (currentPlayerTurn === game.gameState.player1.id) {
@@ -277,6 +310,16 @@ export default function initGamesController(db) {
       }
 
       getOpenTiles(game.gameState, rowId, colId, currentPlayer);
+
+      // check win condition
+      if (currentPlayer.flagCount === Math.ceil(globals.MINE_COUNT / 2)) {
+        // set winner
+        game.winnerUserId = currentPlayer.id;
+        // remove player turn
+        game.gameState.currentPlayerTurn = 0;
+        // open remaining tiles
+        openRemainingTiles(game.gameState);
+      }
 
       const gameToUpdate = {
         ...game,
