@@ -40,6 +40,71 @@ include('../nav/navbar', { user: user, showButton: true, pageState: "home"});
       <hr />
     </div>
     <% } %>
+    <div class="col-12">
+      <% if (games.length <= 0) { %>
+      <p class="text-center">
+        There are no ongoing games now. Please create one!
+      </p>
+      <% } else { %> <% games.forEach((game) => { %> <% if (game.type ===
+      "practice") { %>
+      <div class="mt-3">
+        <div class="practice-mode-game-card game-card col-10 p-3 m-auto">
+          <div class="d-flex justify-content-center align-items-center">
+            <div>
+              <span class="square-image-wrapper">
+                <span class="square-image circle">
+                  <img src="https://avatars.dicebear.com/api/gridy/<%=
+                  game.gameState.player1.realName.toLowerCase().split(' ')
+                  .join('-').split("'").join('-').concat('-')
+                  .concat(game.gameState.player1.id) %>.svg" />
+                </span>
+              </span>
+            </div>
+            <p class="ms-3 fs-4 mb-0 text-truncated">
+              <strong><%= game.gameState.player1.realName %></strong>
+            </p>
+          </div>
+          <div class="mt-3 d-flex justify-content-center">
+            <p class="mb-0">
+              <span class="badge rounded-pill bg-info"
+                >Practice Mode Game (1-Player)</span
+              >
+            </p>
+          </div>
+          <hr />
+          <div class="d-flex justify-content-center">
+            <a
+              class="
+                btn
+                <%
+                if
+                (user
+                &&
+                user.id
+                &&
+                user.id
+                ===
+                game.gameState.player1.id)
+                {
+                %>btn-success<%
+                }
+                else
+                {
+                %>btn-primary<%
+                }
+                %>
+              "
+              href="/games/<%= game.id %>"
+              role="button"
+            >
+              <% if (user && user.id && user.id === game.gameState.player1.id) {
+              %> Continue Your Game <% } else { %> Spectate Game <% } %>
+            </a>
+          </div>
+        </div>
+      </div>
+      <% } else { %> It is not practice <% } %> <% }); %> <% } %>
+    </div>
   </div>
 </div>
 <%- include('../footers/html-footer'); -%>
