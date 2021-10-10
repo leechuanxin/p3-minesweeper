@@ -437,6 +437,96 @@ export default function initGamesController(db) {
     }
   };
 
+  const join = async (request, response) => {
+    try {
+      if (!request.isUserLoggedIn) {
+        const errorMessage = 'You have to be logged in to join a game!';
+        response.render('login', { userInfo: {}, genericSuccess: {}, genericError: { message: errorMessage } });
+      } else {
+        const currentGame = await db.Game.findOne({
+          where: {
+            [db.Sequelize.Op.and]: [
+              {
+                [db.Sequelize.Op.or]: [
+                  { createdUserId: request.user.id },
+                  { playerUserId: request.user.id },
+                ],
+              },
+              {
+                isCompleted: {
+                  [db.Sequelize.Op.eq]: false,
+                },
+              },
+            ],
+          },
+        });
+
+        if (currentGame) {
+          throw new Error(globals.GAME_CANT_JOIN_WHEN_ANOTHER_GAME);
+        }
+
+        const gameId = Number(request.params.id);
+
+        let game = await db.Game.findOne({
+          where: {
+            id: gameId,
+          },
+        });
+
+        if (!game) {
+          throw new Error(globals.GAME_NOT_FOUND_ERROR_MESSAGE);
+        }
+
+        game = game.dataValues;
+
+        if (game.type === 'practice') {
+          throw new Error(globals.GAME_CANT_JOIN_PRACTICE);
+        }
+
+        if (game.playerUserId && game.playerUserId > 0) {
+          throw new Error(globals.GAME_CANT_JOIN_ANOTHER_PLAYER);
+        }
+
+        // set player
+        const player2 = {
+          ...request.user,
+          flagCount: 0,
+          turnCount: 0,
+        };
+        // create game state
+        const gameState = {
+          ...game.gameState,
+          player2,
+          currentPlayerTurn: player2.id,
+        };
+
+        // initialize updated game
+        const updatedGame = {
+          ...game,
+          gameState,
+          playerUserId: player2.id,
+          updatedAt: new Date(),
+        };
+
+        await db.Game.update(
+          updatedGame,
+          {
+            where: { id: gameId },
+            returning: true,
+          },
+        );
+
+        response.redirect(`/games/${gameId}`);
+      }
+    } catch (error) {
+      if (error.message === globals.GAME_CANT_CREATE_WHEN_ANOTHER_GAME) {
+        response.status(401).send(`Error 401: ${error.message}`);
+      } else {
+        response.send(`Error: ${error.message}`);
+      }
+    }
+  };
+
   return {
     newForm,
     create,
@@ -444,5 +534,6 @@ export default function initGamesController(db) {
     showAjax,
     update,
     forfeit,
+    join,
   };
 }

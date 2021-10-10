@@ -123,6 +123,15 @@ include('../nav/navbar', { user: user, showButton: true, pageState: "home"});
               <% if (user && user.id && user.id === game.gameState.player1.id) {
               %> Continue Your Game <% } else { %> Spectate Game <% } %>
             </a>
+            <% if (user && !user.game) { %>
+            <form
+              class="d-inline-block ms-3"
+              action="/games/<%= game.id %>/join?_method=PUT"
+              method="POST"
+            >
+              <input class="btn btn-success" type="submit" value="Join Game" />
+            </form>
+            <% } %>
           </div>
         </div>
       </div>

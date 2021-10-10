@@ -207,15 +207,47 @@ export const printUi = (game) => {
     player1TurnText = "It's your turn now! Please make a move.";
   } else if (game.gameState.currentPlayerTurn === player1.id) {
     player1TurnText = `Waiting for ${player1.realName} to make a move...`;
+  } else if (
+    loggedInUserId === player1.id
+    && player2
+    && player2.id
+    && player2.realName
+    && game.gameState.currentPlayerTurn === player2.id
+  ) {
+    player1TurnText = `Please wait for ${player2.realName} to finish their turn.`;
+  } else if (
+    player2
+    && player2.id
+    && player2.realName
+    && game.gameState.currentPlayerTurn === player2.id
+  ) {
+    player1TurnText = `${player1.realName} is waiting for ${player2.realName} to finish their turn.`;
   }
 
-  if (game.isCompleted && loggedInUserId === player2.id && game.winnerUserId === player2.id) {
+  console.log('game.gameState.currentPlayerTurn === player1.id:', game.gameState.currentPlayerTurn === player1.id);
+  if (
+    game.isCompleted
+    && player2
+    && player2.id
+    && loggedInUserId === player2.id
+    && game.winnerUserId === player2.id
+  ) {
     player2TurnText = 'You have won this game!';
-  } else if (game.isCompleted && game.winnerUserId === player2.id) {
+  } else if (
+    game.isCompleted
+    && player2
+    && player2.id
+    && game.winnerUserId === player2.id
+  ) {
     player2TurnText = `${player2.realName} has won this game!`;
-  } else if (game.isCompleted && loggedInUserId === player2.id) {
+  } else if (
+    game.isCompleted
+    && player2
+    && player2.id
+    && loggedInUserId === player2.id
+  ) {
     player2TurnText = 'You have lost this game!';
-  } else if (game.isCompleted) {
+  } else if (game.isCompleted && player2 && player2.realName) {
     player2TurnText = `${player2.realName} has lost this game!`;
   } else if (loggedInUserId !== game.createdUserId && game.type === 'twoplayer' && !game.playerUserId) {
     player2TurnText = `This could be you! Join this game to challenge ${player1.realName}!`;
@@ -231,9 +263,24 @@ export const printUi = (game) => {
   } else if (
     player2
     && player2.id
+    && player2.realName
     && game.gameState.currentPlayerTurn === player2.id
   ) {
     player2TurnText = `Waiting for ${player2.realName} to make a move...`;
+  } else if (
+    player2
+    && player2.id
+    && loggedInUserId === player2.id
+    && game.gameState.currentPlayerTurn === player1.id
+  ) {
+    player2TurnText = `Please wait for ${player1.realName} to finish their turn.`;
+  } else if (
+    player2
+    && player2.id
+    && player2.realName
+    && game.gameState.currentPlayerTurn === player1.id
+  ) {
+    player2TurnText = `${player2.realName} is waiting for ${player1.realName} to finish their turn.`;
   }
 
   profileWrapper.innerHTML = `
