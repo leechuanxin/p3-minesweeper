@@ -19,7 +19,35 @@ export const handleRefresh = (gameId, userId, canClick) => () => {
         canClick.value = true;
       }
       printBoard(board, gameId, currentGame, canClick, userId);
-      printUi(currentGame);
+      printUi(currentGame, canClick);
+      printGameOverFeedback(currentGame, userId);
+      printForfeitButton(currentGame, userId, canClick);
+    })
+    .catch((error) => {
+      if (button) {
+        button.disabled = false;
+      }
+      console.log('error:', error);
+    });
+};
+
+export const handleJoinGame = (gameId, userId, canClick) => () => {
+  const button = document.querySelector('#joinGameButton');
+  if (button) {
+    button.disabled = true;
+  }
+  axios.put(`/games/${gameId}/joinajax`)
+    .then((response) => {
+      if (button) {
+        button.disabled = false;
+      }
+      const currentGame = response.data;
+      const board = currentGame.gameState.printedBoard;
+      if (userId === currentGame.gameState.currentPlayerTurn) {
+        canClick.value = true;
+      }
+      printBoard(board, gameId, currentGame, canClick, userId);
+      printUi(currentGame, canClick);
       printGameOverFeedback(currentGame, userId);
       printForfeitButton(currentGame, userId, canClick);
     })
@@ -45,7 +73,7 @@ export const handleTileClick = (board, gameId, canClick, userId) => (e) => {
           canClick.value = true;
         }
         printBoard(printedBoard, gameId, currentGame, canClick, userId);
-        printUi(currentGame);
+        printUi(currentGame, canClick);
         printGameOverFeedback(currentGame, userId);
         printForfeitButton(currentGame, userId, canClick);
       })
@@ -145,7 +173,7 @@ export const printBoard = (board, gameId, game, canClick, userId) => {
   handleTilesClick(board, gameId, canClick, userId);
 };
 
-export const printUi = (game) => {
+export const printUi = (game, canClick) => {
   const loggedInUserIdText = cookie.getCookie('userId');
   const loggedInUserId = Number(loggedInUserIdText);
   const profileWrapper = document.querySelector('#profileWrapper');
@@ -224,7 +252,6 @@ export const printUi = (game) => {
     player1TurnText = `${player1.realName} is waiting for ${player2.realName} to finish their turn.`;
   }
 
-  console.log('game.gameState.currentPlayerTurn === player1.id:', game.gameState.currentPlayerTurn === player1.id);
   if (
     game.isCompleted
     && player2
@@ -401,10 +428,13 @@ export const printUi = (game) => {
       </div>
     </div>
     `;
+
+    const joinGameButton = document.querySelector('#joinGameButton');
+
+    if (joinGameButton) {
+      joinGameButton.addEventListener('click', handleJoinGame(game.id, loggedInUserId, canClick));
+    }
   }
-  console.log('print ui:', game);
-  console.log('player 1 image:', player1Image);
-  console.log('player 2 image:', player2Image);
 };
 
 export const printGameOverFeedback = (game, userId) => {
@@ -476,7 +506,7 @@ export const printForfeitButton = (game, userId, canClick) => {
             canClick.value = true;
           }
           printBoard(printedBoard, currentGame.id, currentGame, canClick, userId);
-          printUi(currentGame);
+          printUi(currentGame, canClick);
           printGameOverFeedback(currentGame, userId);
           printForfeitButton(currentGame, userId, canClick);
         })

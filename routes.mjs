@@ -26,6 +26,7 @@ export default function bindRoutes(app) {
   app.put('/games/:id/row/:rowId/col/:colId/update', GamesController.update);
   app.put('/games/:id/forfeit', GamesController.forfeit);
   app.put('/games/:id/join', GamesController.join);
+  app.put('/games/:id/joinajax', GamesController.joinAjax);
 
   app.get('/home', (request, response) => {
     response.render('home');
