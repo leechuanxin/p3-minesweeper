@@ -27,8 +27,8 @@ export default function initGamesController(db) {
                 ],
               },
               {
-                winnerUserId: {
-                  [db.Sequelize.Op.eq]: null,
+                isCompleted: {
+                  [db.Sequelize.Op.eq]: false,
                 },
               },
             ],
@@ -80,6 +80,7 @@ export default function initGamesController(db) {
           gameState,
           playerUserId: null,
           winnerUserId: null,
+          isCompleted: false,
           createdAt: new Date(),
           updatedAt: new Date(),
         };
@@ -265,7 +266,6 @@ export default function initGamesController(db) {
       let otherPlayer = {};
       let nextPlayerTurn = 0;
       const { board } = game.gameState;
-      const { printedBoard } = game.gameState;
 
       // determine current player
       if (currentPlayerTurn === game.gameState.player1.id) {
@@ -295,6 +295,8 @@ export default function initGamesController(db) {
         currentPlayer.turnCount += 1;
         // set winner
         game.winnerUserId = currentPlayer.id;
+        // set game as completed
+        game.isCompleted = true;
         // remove player turn
         nextPlayerTurn = 0;
         // open remaining tiles
@@ -344,11 +346,101 @@ export default function initGamesController(db) {
     }
   };
 
+  const forfeit = async (request, response) => {
+    try {
+      const gameId = request.params.id;
+      const { user } = request;
+
+      if (!user) {
+        throw new Error(globals.GAME_CANT_FORFEIT_USER_NOT_LOGGED_IN);
+      }
+
+      let game = await db.Game.findOne({
+        where: {
+          id: gameId,
+        },
+      });
+
+      if (!game) {
+        throw new Error(globals.GAME_NOT_FOUND_ERROR_MESSAGE);
+      }
+
+      if (user.id !== game.createdUserId && user.id !== game.playerUserId) {
+        throw new Error(globals.GAME_CANT_FORFEIT_USER_NOT_PLAYER);
+      }
+
+      game = game.dataValues;
+      // 1 player mode, or game not joined
+      if (typeof game.playerUserId !== 'number') {
+        game.isCompleted = true;
+      }
+      // 2 player mode, where user is 2nd player
+      // set winner to 1st player
+      else if (user.id === game.playerUserId) {
+        game.winnerUserId = game.createdUserId;
+        game.isCompleted = true;
+      }
+      // 2 player mode, where user is 1st player
+      // set winner to 2nd player
+      else {
+        game.winnerUserId = game.playerUserId;
+        game.isCompleted = true;
+      }
+
+      // remove player turn
+      const nextPlayerTurn = 0;
+      // open remaining tiles
+      openRemainingTiles(game.gameState);
+
+      const gameToUpdate = {
+        ...game,
+        gameState: {
+          board: game.gameState.board,
+          printedBoard: game.gameState.printedBoard,
+          player1: game.gameState.player1,
+          player2: game.gameState.player2,
+          totalMines: game.gameState.totalMines,
+          minesLeft: game.gameState.minesLeft,
+          currentPlayerTurn: nextPlayerTurn,
+        },
+        updatedAt: new Date(),
+      };
+
+      const updatedGame = await db.Game.update(
+        gameToUpdate,
+        {
+          where: { id: gameId },
+          returning: true,
+        },
+      );
+
+      const printedGame = {
+        ...updatedGame[1][0].dataValues,
+        gameState: {
+          printedBoard: updatedGame[1][0].gameState.printedBoard,
+          player1: updatedGame[1][0].gameState.player1,
+          player2: updatedGame[1][0].gameState.player2,
+          totalMines: updatedGame[1][0].gameState.totalMines,
+          minesLeft: updatedGame[1][0].gameState.minesLeft,
+          currentPlayerTurn: updatedGame[1][0].gameState.currentPlayerTurn,
+        },
+      };
+
+      response.send(printedGame);
+    } catch (error) {
+      response.send({
+        error: error.message,
+        stack: error.stack,
+      });
+    }
+  };
+
   return {
     newForm,
     create,
     show,
     showAjax,
     update,
+    forfeit,
   };
 }

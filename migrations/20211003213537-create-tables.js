@@ -73,6 +73,10 @@ module.exports = {
           key: 'id',
         },
       },
+      is_completed: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,

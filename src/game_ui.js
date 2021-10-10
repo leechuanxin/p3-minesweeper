@@ -19,6 +19,7 @@ export const handleTileClick = (board, gameId, canClick, userId) => (e) => {
         printBoard(printedBoard, gameId, currentGame, canClick, userId);
         printUi(currentGame);
         printGameOverFeedback(currentGame, userId);
+        printForfeitButton(currentGame, userId, canClick);
       })
       .catch((error) => {
         console.log('error:', error);
@@ -160,13 +161,13 @@ export const printUi = (game) => {
     player2TurnArrowDisplay = ' d-none';
   }
 
-  if (loggedInUserId === player1.id && game.winnerUserId === player1.id) {
+  if (game.isCompleted && loggedInUserId === player1.id && game.winnerUserId === player1.id) {
     player1TurnText = 'You have won this game!';
-  } else if (game.winnerUserId === player1.id) {
+  } else if (game.isCompleted && game.winnerUserId === player1.id) {
     player1TurnText = `${player1.realName} has won this game!`;
-  } else if (player2 && loggedInUserId === player1.id && game.winnerUserId === player2.id) {
+  } else if (game.isCompleted && loggedInUserId === player1.id) {
     player1TurnText = 'You have lost this game!';
-  } else if (player2 && game.winnerUserId === player2.id) {
+  } else if (game.isCompleted) {
     player1TurnText = `${player1.realName} has lost this game!`;
   } else if (loggedInUserId === player1.id && game.gameState.currentPlayerTurn === loggedInUserId) {
     player1TurnText = "It's your turn now! Please make a move.";
@@ -249,7 +250,7 @@ export const printUi = (game) => {
 };
 
 export const printGameOverFeedback = (game, userId) => {
-  const hasWinner = (typeof game.winnerUserId === 'number');
+  const hasWinner = game.isCompleted;
   let gameOverText = '';
   const gameOverFeedbackCol = document.querySelector('#gameOverFeedbackCol');
 
@@ -285,5 +286,36 @@ export const printGameOverFeedback = (game, userId) => {
         <span>${gameOverText}</span>
       </p>
     `;
+  }
+};
+
+export const printForfeitButton = (game, userId, canClick) => {
+  const forfeitButtonContainer = document.querySelector('#forfeitButtonContainer');
+  // clear forfeit button container first
+  forfeitButtonContainer.innerHTML = '';
+  console.log('game is complete status on click:', game.isCompleted);
+  if (!game.isCompleted && (userId === game.createdUserId || userId === game.playerUserId)) {
+    forfeitButtonContainer.innerHTML = "<button id='forfeitButton' class='btn btn-danger'>Forfeit</button>";
+  }
+  const button = document.querySelector('#forfeitButton');
+  if (button) {
+    button.addEventListener('click', () => {
+      canClick.value = false;
+      axios.put(`/games/${game.id}/forfeit`)
+        .then((response) => {
+          const currentGame = response.data;
+          const { printedBoard } = response.data.gameState;
+          if (userId === currentGame.gameState.currentPlayerTurn) {
+            canClick.value = true;
+          }
+          printBoard(printedBoard, currentGame.id, currentGame, canClick, userId);
+          printUi(currentGame);
+          printGameOverFeedback(currentGame, userId);
+          printForfeitButton(currentGame, userId, canClick);
+        })
+        .catch((error) => {
+          console.log('error:', error);
+        });
+    });
   }
 };

@@ -29,6 +29,7 @@ if (gameId !== 0 && !Number.isNaN(gameId)) {
       gameUI.printBoard(board, gameId, currentGame, canClick, userId);
       gameUI.printUi(currentGame);
       gameUI.printGameOverFeedback(currentGame, userId);
+      gameUI.printForfeitButton(currentGame, userId, canClick);
     })
     .catch((error) => {
       console.log('error:', error);

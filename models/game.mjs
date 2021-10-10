@@ -30,6 +30,10 @@ export default function initGameModel(sequelize, DataTypes) {
         key: 'id',
       },
     },
+    isCompleted: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN,
+    },
     type: {
       allowNull: false,
       type: DataTypes.STRING,
