@@ -374,10 +374,27 @@
   border: 1px solid #000;
   border-radius: 10px;
 
+  .player1-name {
+    color: #1b5e20;
+  }
+
+  .player2-name {
+    color: #1565c0;
+  }
+
   .square-image-wrapper {
     width: 48px;
-    .circle {
-      border: 1px solid #000;
+
+    &.player1-image {
+      .circle {
+        border: 1px solid #4caf50;
+      }
+    }
+
+    &.player2-image {
+      .circle {
+        border: 1px solid #2196f3;
+      }
     }
   }
 }
