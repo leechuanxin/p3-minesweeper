@@ -172,9 +172,9 @@ const printUi = (game) => {
     player1TurnText = 'You have won this game!';
   } else if (game.winnerUserId === player1.id) {
     player1TurnText = `${player1.realName} has won this game!`;
-  } else if (loggedInUserId === player1.id && game.winnerUserId === player2.id) {
+  } else if (player2 && loggedInUserId === player1.id && game.winnerUserId === player2.id) {
     player1TurnText = 'You have lost this game!';
-  } else if (game.winnerUserId === player2.id) {
+  } else if (player2 && game.winnerUserId === player2.id) {
     player1TurnText = `${player1.realName} has lost this game!`;
   } else if (loggedInUserId === player1.id && game.gameState.currentPlayerTurn === loggedInUserId) {
     player1TurnText = "It's your turn now! Please make a move.";
