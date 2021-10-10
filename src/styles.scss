@@ -116,11 +116,11 @@
     }
 
     &.player1-opened {
-      background: #f1f8e9;
+      background: #e8f5e9;
 
       span {
         i.fas {
-          color: #8bc34a;
+          color: #4caf50;
         }
       }
     }
@@ -226,8 +226,8 @@
 }
 
 .player1-profile {
-  background-color: #f1f8e9;
-  border: 1px solid #8bc34a;
+  background-color: #e8f5e9;
+  border: 1px solid #4caf50;
 
   span,
   p,
@@ -237,39 +237,39 @@
   h4,
   h5,
   h6 {
-    color: #558b2f;
+    color: #1b5e20;
   }
 
   .divider {
-    border-bottom: 1px solid #8bc34a;
+    border-bottom: 1px solid #4caf50;
   }
 
   .player1-arrow {
-    color: #558b2f;
+    color: #1b5e20;
   }
 
   .square-image-wrapper {
     .circle {
-      border: 1px solid #8bc34a;
+      border: 1px solid #4caf50;
     }
   }
 
   .counter-container {
-    border: 1px solid #8bc34a;
+    border: 1px solid #4caf50;
 
     div:first-child,
     div:nth-child(3) {
-      border-right: 1px solid #8bc34a;
+      border-right: 1px solid #4caf50;
     }
 
     div:first-child,
     div:nth-child(2) {
-      border-bottom: 1px solid #8bc34a;
+      border-bottom: 1px solid #4caf50;
     }
 
     i.far,
     i.fas {
-      color: #8bc34a;
+      color: #4caf50;
     }
   }
 }
