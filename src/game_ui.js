@@ -3,11 +3,16 @@ import axios from 'axios';
 // CUSTOM IMPORTS
 import * as cookie from './cookie.js';
 
-export const handleRefresh = (button, gameId, userId, canClick) => () => {
-  button.disabled = true;
+export const handleRefresh = (gameId, userId, canClick) => () => {
+  const button = document.querySelector('#forfeitButton');
+  if (button) {
+    button.disabled = true;
+  }
   axios.get(`/games/${gameId}/show`)
     .then((response) => {
-      button.disabled = false;
+      if (button) {
+        button.disabled = false;
+      }
       const currentGame = response.data.game;
       const board = currentGame.gameState.printedBoard;
       if (userId === currentGame.gameState.currentPlayerTurn) {
@@ -19,7 +24,9 @@ export const handleRefresh = (button, gameId, userId, canClick) => () => {
       printForfeitButton(currentGame, userId, canClick);
     })
     .catch((error) => {
-      button.disabled = false;
+      if (button) {
+        button.disabled = false;
+      }
       console.log('error:', error);
     });
 };
@@ -315,8 +322,14 @@ export const printGameOverFeedback = (game, userId) => {
 export const printForfeitButton = (game, userId, canClick) => {
   const forfeitButtonContainer = document.querySelector('#forfeitButtonContainer');
   // clear forfeit button container first
-  forfeitButtonContainer.innerHTML = '';
-  if (!game.isCompleted && (userId === game.createdUserId || userId === game.playerUserId)) {
+  if (forfeitButtonContainer) {
+    forfeitButtonContainer.innerHTML = '';
+  }
+  if (
+    forfeitButtonContainer
+    && !game.isCompleted
+    && (userId === game.createdUserId || userId === game.playerUserId)
+  ) {
     forfeitButtonContainer.innerHTML = "<button id='forfeitButton' class='btn btn-danger'>Forfeit</button>";
   }
   const button = document.querySelector('#forfeitButton');
