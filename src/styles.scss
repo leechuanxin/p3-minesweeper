@@ -236,3 +236,44 @@
     }
   }
 }
+
+.mines-left-profile {
+  background-color: #f44336;
+  border: 1px solid #f44336;
+
+  span,
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #ffebee;
+  }
+
+  .mines-left-header {
+    width: 67%;
+    position: absolute;
+    background: #ffebee;
+    border-radius: 50%;
+    border: 2px solid #c62828;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #d32f2f;
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      padding-bottom: 100%;
+    }
+  }
+}

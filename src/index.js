@@ -138,6 +138,7 @@ const printUi = (game) => {
   const player1Image = `https://avatars.dicebear.com/api/gridy/${player1ImageSeed}.svg`;
   const player2Image = `https://avatars.dicebear.com/api/gridy/${player2ImageSeed}.svg`;
   let player1TurnText = '';
+  const minesLeftText = game.gameState.minesLeft;
 
   if (loggedInUserId === player1.id && game.gameState.currentPlayerTurn === loggedInUserId) {
     player1TurnText = "It's your turn now! Please make a move.";
@@ -146,7 +147,7 @@ const printUi = (game) => {
   }
 
   profileWrapper.innerHTML = `
-    <div class="player1-profile p-3">
+    <div class="player1-profile ps-3 pe-3 pt-3 pb-5">
       <span class="square-image-wrapper mb-3">
         <span class="square-image circle">
           <img src="${player1Image}" />
@@ -182,6 +183,29 @@ const printUi = (game) => {
               </span>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="mines-left-profile w-100 ps-3 pe-3 pt-3 pb-3">
+      <div class="row">
+        <div class="col-4 text-center">
+          <span class="fs-2">
+            <i class="fas fa-bomb"></i>
+          </span>
+        </div>
+        <div class="col-4 position-relative">
+          <div class="mines-left-header">
+            <span class="fs-2">
+              <strong>
+                ${minesLeftText}
+              </strong>
+            </span>
+          </div>
+        </div>
+        <div class="col-4 text-center">
+          <span class="fs-2">
+            <i class="fas fa-bomb"></i>
+          </span>
         </div>
       </div>
     </div>
