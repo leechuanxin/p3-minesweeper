@@ -175,7 +175,7 @@ export const printUi = (game) => {
   }
 
   profileWrapper.innerHTML = `
-    <div class="player1-profile ps-3 pe-3 pt-3 pb-5">
+    <div class="player1-profile ps-3 pe-3 pt-5 pb-5">
       <div class="player1-arrow${player1TurnArrowDisplay}">
         <div class="animate__animated animate__bounce animate__infinite">
           <i class="fas fa-location-arrow"></i>
