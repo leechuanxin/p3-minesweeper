@@ -317,36 +317,38 @@ export const printUi = (game, canClick) => {
           <i class="fas fa-location-arrow"></i>
         </div>
       </div>
-      <span class="square-image-wrapper mb-3">
-        <span class="square-image circle">
-          <img src="${player1Image}" />
+      <div class="d-flex justify-content-center align-items-center d-md-block">
+        <span class="square-image-wrapper mb-3">
+          <span class="square-image circle">
+            <img src="${player1Image}" />
+          </span>
         </span>
-      </span>
-      <p class="text-center text-truncated mb-3">
-        <strong>${player1.realName}</strong>
-      </p>
+        <p class="text-center text-truncated mb-3">
+          <strong>${player1.realName}</strong>
+        </p>
+      </div>
       <div class="divider"></div>
       <p class="text-center pt-1 pb-1 mt-3 mb-3">${player1TurnText}</p>
       <div class="divider"></div>
       <div class="row mt-3">
         <div class="col-10 m-auto">
           <div class="row counter-container">
-            <div class="col-4 p-2 text-center">
+            <div class="col-2 col-md-4 p-2 text-center">
               <span>
                 <i class="fas fa-flag"></i>
               </span>
             </div>
-            <div class="col-8 p-2 text-center">
+            <div class="col-4 col-md-8 p-2 text-center">
               <span>
                 <strong>${player1.flagCount}</strong>
               </span>
             </div>
-            <div class="col-4 p-2 text-center">
+            <div class="col-2 col-md-4 p-2 text-center">
               <span>
                 <i class="far fa-clock"></i>
               </span>
             </div>
-            <div class="col-8 p-2 text-center">
+            <div class="col-4 col-md-8 p-2 text-center">
               <span>
                 <strong>${player1.turnCount}</strong>
               </span>
@@ -388,14 +390,16 @@ export const printUi = (game, canClick) => {
           <i class="fas fa-location-arrow"></i>
         </div>
       </div>
-      <span class="square-image-wrapper mb-3">
-        <span class="square-image circle">
-          <img src="${player2Image}" />
+      <div class="d-flex justify-content-center align-items-center d-md-block">
+        <span class="square-image-wrapper mb-3">
+          <span class="square-image circle">
+            <img src="${player2Image}" />
+          </span>
         </span>
-      </span>
-      <p class="text-center text-truncated mb-3">
-        <strong>${player2 && player2.realName ? player2.realName : '???'}</strong>
-      </p>
+        <p class="text-center text-truncated mb-3">
+          <strong>${player2 && player2.realName ? player2.realName : '???'}</strong>
+        </p>
+      </div>
       <div class="divider"></div>
       <p class="text-center pt-1 pb-1 mt-3 mb-3">${player2TurnText}</p>
       ${player2JoinButton}
@@ -403,22 +407,22 @@ export const printUi = (game, canClick) => {
       <div class="row mt-3">
         <div class="col-10 m-auto">
           <div class="row counter-container">
-            <div class="col-4 p-2 text-center">
+            <div class="col-2 col-md-4 p-2 text-center">
               <span>
                 <i class="fas fa-flag"></i>
               </span>
             </div>
-            <div class="col-8 p-2 text-center">
+            <div class="col-4 col-md-8 p-2 text-center">
               <span>
                 <strong>${player2 && player2.flagCount ? player2.flagCount : 0}</strong>
               </span>
             </div>
-            <div class="col-4 p-2 text-center">
+            <div class="col-2 col-md-4 p-2 text-center">
               <span>
                 <i class="far fa-clock"></i>
               </span>
             </div>
-            <div class="col-8 p-2 text-center">
+            <div class="col-4 col-md-8 p-2 text-center">
               <span>
                 <strong>${player2 && player2.turnCount ? player2.turnCount : 0}</strong>
               </span>

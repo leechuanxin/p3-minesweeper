@@ -208,6 +208,17 @@
 .player1-profile,
 .player2-profile {
   position: relative;
+
+  .square-image-wrapper {
+    margin: 0;
+    width: 64px;
+    margin-right: 10px;
+
+    @media screen and (min-width: 768px) {
+      margin: 0 auto;
+      width: 120px;
+    }
+  }
 }
 
 .player1-arrow,
@@ -257,14 +268,28 @@
   .counter-container {
     border: 1px solid #4caf50;
 
-    div:first-child,
-    div:nth-child(3) {
+    div {
       border-right: 1px solid #4caf50;
     }
 
-    div:first-child,
-    div:nth-child(2) {
-      border-bottom: 1px solid #4caf50;
+    div:last-child {
+      border-right: 0;
+    }
+
+    @media screen and (min-width: 768px) {
+      div {
+        border: 0;
+      }
+
+      div:first-child,
+      div:nth-child(3) {
+        border-right: 1px solid #4caf50;
+      }
+
+      div:first-child,
+      div:nth-child(2) {
+        border-bottom: 1px solid #4caf50;
+      }
     }
 
     i.far,
@@ -306,14 +331,29 @@
   .counter-container {
     border: 1px solid #2196f3;
 
-    div:first-child,
-    div:nth-child(3) {
+    // some here
+    div {
       border-right: 1px solid #2196f3;
     }
 
-    div:first-child,
-    div:nth-child(2) {
-      border-bottom: 1px solid #2196f3;
+    div:last-child {
+      border-right: 0;
+    }
+
+    @media screen and (min-width: 768px) {
+      div {
+        border: 0;
+      }
+
+      div:first-child,
+      div:nth-child(3) {
+        border-right: 1px solid #2196f3;
+      }
+
+      div:first-child,
+      div:nth-child(2) {
+        border-bottom: 1px solid #2196f3;
+      }
     }
 
     i.far,
