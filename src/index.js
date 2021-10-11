@@ -9,6 +9,7 @@ import * as cookie from './cookie.js';
 const canClick = {
   value: false,
 };
+
 const gameIdSpan = document.querySelector('#gameId');
 const refreshUIButton = document.querySelector('#refreshUIButton');
 let gameId = 0;
@@ -26,5 +27,5 @@ if (gameId !== 0 && !Number.isNaN(gameId)) {
 }
 
 if (gameId !== 0 && !Number.isNaN(gameId)) {
-  setInterval(gameUI.handleRefresh(gameId, userId, canClick), 10000);
+  setInterval(gameUI.handleRefresh(gameId, userId, canClick), 3000);
 }
