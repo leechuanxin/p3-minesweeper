@@ -6,6 +6,7 @@ export default function initIndexController(db) {
           [db.Sequelize.Op.eq]: false,
         },
       },
+      order: [['id', 'DESC']],
     });
 
     response.render('index/index', { user: request.user, games });
