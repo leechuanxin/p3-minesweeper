@@ -24,3 +24,7 @@ if (refreshUIButton) {
 if (gameId !== 0 && !Number.isNaN(gameId)) {
   (gameUI.handleRefresh(gameId, userId, canClick))();
 }
+
+if (gameId !== 0 && !Number.isNaN(gameId)) {
+  setInterval(gameUI.handleRefresh(gameId, userId, canClick), 10000);
+}
