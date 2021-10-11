@@ -188,8 +188,9 @@ include('../nav/navbar', { user: user, showButton: true, pageState: "home"});
               role="button"
             >
               <% if (user && user.id && (user.id === game.gameState.player1.id
-              || user.id === game.gameState.player2.id)) { %> Continue Your Game
-              <% } else { %> Spectate Game <% } %>
+              || (game.gameState.player2 && user.id ===
+              game.gameState.player2.id))) { %> Continue Your Game <% } else {
+              %> Spectate Game <% } %>
             </a>
             <% if (user && !user.game && !game.playerUserId) { %>
             <form
