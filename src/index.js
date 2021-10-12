@@ -27,5 +27,5 @@ if (gameId !== 0 && !Number.isNaN(gameId)) {
 }
 
 if (gameId !== 0 && !Number.isNaN(gameId)) {
-  setInterval(gameUI.handleRefresh(gameId, userId, canClick), 3000);
+  setInterval(gameUI.handleRefresh(gameId, userId, canClick), 2100);
 }
