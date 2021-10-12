@@ -29,37 +29,7 @@ include('../nav/navbar', { user: user, showButton: true, pageState:
           <button id="refreshUIButton" type="button" class="btn btn-primary">
             Refresh UI
           </button>
-          <div
-            class="modal fade"
-            id="infoModal"
-            tabindex="-1"
-            aria-labelledby="infoModal"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Game Rules</h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div class="modal-body">
-                  <p>
-                    <strong>Practice Mode (1-Player):</strong> Try to flag 26
-                    mines in as few turns as possible!
-                  </p>
-                  <p>
-                    <strong>2-Player Game:</strong> The first to flag 26 mines
-                    win!
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <%- include('../modals/rules', { minesToWin }); -%>
         </div>
         <div id="forfeitButtonContainer" class="col-4 text-end"></div>
       </div>

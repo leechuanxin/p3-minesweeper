@@ -7,7 +7,8 @@ export default function initGamesController(db) {
       response.redirect('/login');
     } else {
       const { user } = request;
-      response.render('games/newForm', { user, game: {} });
+      const minesToWin = Math.ceil(globals.MINE_COUNT / 2);
+      response.render('games/newForm', { user, game: {}, minesToWin });
     }
   };
 
@@ -123,7 +124,11 @@ export default function initGamesController(db) {
         id: game.dataValues.id,
       };
 
-      response.render('games/show', { user, game: renderedGame, title });
+      const minesToWin = Math.ceil(globals.MINE_COUNT / 2);
+
+      response.render('games/show', {
+        user, game: renderedGame, title, minesToWin,
+      });
     } catch (error) {
       if (error.message === globals.GAME_NOT_FOUND_ERROR_MESSAGE) {
         response.status(404).send(`Error 404: ${globals.GAME_NOT_FOUND_ERROR_MESSAGE}`);

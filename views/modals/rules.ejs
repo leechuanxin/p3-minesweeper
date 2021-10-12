@@ -1,0 +1,37 @@
+<div
+  class="modal fade"
+  id="infoModal"
+  tabindex="-1"
+  aria-labelledby="infoModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Game Rules</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          <strong
+            >Find the hidden mines and flag them! Numbered squares tell you how
+            many mines are hidden nearby. Diagonals count!</strong
+          >
+        </p>
+        <p>
+          <strong><em>Practice Mode (1-Player)</em></strong
+          >: Try to flag <%= minesToWin %> mines in as few turns as possible!
+        </p>
+        <p>
+          <strong><em>2-Player Game</em></strong
+          >: The first to flag <%= minesToWin %> mines win!
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
