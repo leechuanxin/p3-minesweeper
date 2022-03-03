@@ -18,5 +18,8 @@ if (gameIdSpan) {
 }
 
 if (gameId !== 0 && !Number.isNaN(gameId)) {
+  // onload, display ui
+  (gameUI.handleRefresh(gameId, userId, canClick))();
+  // on interval, api call to retrieve updated ui and player turn
   setInterval(gameUI.handleRefresh(gameId, userId, canClick), 3100);
 }
