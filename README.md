@@ -165,7 +165,7 @@ How are depth-first search and recursion related to Minesweeper? In Minesweeper,
 
 In a depth-first search, you explore in one direction (of a tree, graph etc) as far as possible, before backtracking and exploring in another. Assuming a 3x3 block of tiles, and the player chooses to click on the middle tile to open it to reveal nothing (no adjacent mines), there are `(9 - 1)` different directions the tiles can continue opening.
 
-Given that the structure of a Minesweeper game board as a 2D grid, [it can be reimagined as a graph data structure](https://mathworld.wolfram.com/GridGraph.html).
+Given the structure of a Minesweeper game board as a 2D grid, [it can be reimagined as a graph data structure](https://mathworld.wolfram.com/GridGraph.html).
 
 Putting the above together, a simplistic pseudocode algorithm for (recursively) opening tiles upon clicking to open the first empty tile is:
 
