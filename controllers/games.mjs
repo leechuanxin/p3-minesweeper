@@ -184,10 +184,6 @@ export default function initGamesController(db) {
       return;
     }
 
-    if (gameState.board[row][col].opened === true) {
-      return;
-    }
-
     // number or mine
     if (gameState.board[row][col].value.trim() !== '') {
       gameState.board[row][col].opened = true;
