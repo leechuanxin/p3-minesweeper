@@ -161,8 +161,6 @@ You can visit the project's website [here](https://arcane-cove-70222.herokuapp.c
 
 #### Depth-First Graph Traversal and Recursion
 
-As implied in the <a href="#motivation">Motivation</a> section, I embarked on this project without realising it can involve any computational algorithms or data structures. It was after my instructor's warning that I started thinking about how the game logic can be applied recursively.
-
 How are depth-first search and recursion related to Minesweeper? In Minesweeper, clicking to open a tile which does not have a hidden mine will reveal a number indicating the number of adjacent mines. In the case of opening an empty tile (no adjacent mines), adjacent tiles will continue (recursively) opening until a tile is opened with a number.
 
 In a depth-first search, you explore in one direction (of a tree, graph etc) as far as possible, before backtracking and exploring in another. Assuming a 3x3 block of tiles, and the player chooses to click on the middle tile to open it to reveal nothing (no adjacent mines), there are `(9 - 1)` different directions the tiles can continue opening.
