@@ -4,15 +4,8 @@ import axios from 'axios';
 import * as cookie from './cookie.js';
 
 export const handleRefresh = (gameId, userId, canClick) => () => {
-  const button = document.querySelector('#refreshUIButton');
-  if (button) {
-    button.disabled = true;
-  }
   axios.get(`/games/${gameId}/show`)
     .then((response) => {
-      if (button) {
-        button.disabled = false;
-      }
       const currentGame = response.data.game;
       const board = currentGame.gameState.printedBoard;
       if (userId === currentGame.gameState.currentPlayerTurn) {
@@ -24,9 +17,6 @@ export const handleRefresh = (gameId, userId, canClick) => () => {
       printForfeitButton(currentGame, userId, canClick);
     })
     .catch((error) => {
-      if (button) {
-        button.disabled = false;
-      }
       console.log('error:', error);
     });
 };

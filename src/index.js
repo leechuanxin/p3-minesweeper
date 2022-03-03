@@ -11,19 +11,10 @@ const canClick = {
 };
 
 const gameIdSpan = document.querySelector('#gameId');
-const refreshUIButton = document.querySelector('#refreshUIButton');
 let gameId = 0;
 const userId = (cookie.getCookie('userId') === '') ? 0 : Number(cookie.getCookie('userId'));
 if (gameIdSpan) {
   gameId = Number(gameIdSpan.innerText);
-}
-
-if (refreshUIButton) {
-  refreshUIButton.addEventListener('click', gameUI.handleRefresh(gameId, userId, canClick));
-}
-
-if (gameId !== 0 && !Number.isNaN(gameId)) {
-  (gameUI.handleRefresh(gameId, userId, canClick))();
 }
 
 if (gameId !== 0 && !Number.isNaN(gameId)) {
