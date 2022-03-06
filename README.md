@@ -13,7 +13,9 @@ This Minesweeper game is built following the requirements of [Rocket's Academy P
   <ol>
   	<li>
       <a href="#game-rules">Game Rules</a>
-      <ol>
+      
+    </li>
+	  <ol>
         <li>
           <a href="#traditional-minesweeper">Traditional Minesweeper</a>
         </li>
@@ -24,7 +26,6 @@ This Minesweeper game is built following the requirements of [Rocket's Academy P
           <a href="#practice-single-player-mode">Practice (Single-Player) Mode</a>
         </li>
       </ol>
-    </li>
     <li>
       <a href="#motivation">Motivation</a>
     </li>
@@ -142,6 +143,20 @@ Since the discontinuation of MSN Messenger (and its games), I couldn't find a go
 ## Usage
 
 You can visit the project's website [here](https://arcane-cove-70222.herokuapp.com/).
+
+<img width="1420" alt="Screenshot 2022-03-07 at 3 29 49 AM" src="https://user-images.githubusercontent.com/7672836/156939022-9e7e4f7a-64cd-4a9e-8bed-06b0caa414e0.png">
+
+1. Go to the project's [website](https://arcane-cove-70222.herokuapp.com/). You should be able to see a simple page with all the currently running games just like the screenshot above. Without an account yet, you can only spectate other players' games. Click on the green Log In button on the top navigational bar to begin joining or creating games.
+
+<img width="1419" alt="Screenshot 2022-03-07 at 3 31 12 AM" src="https://user-images.githubusercontent.com/7672836/156939078-f96472e4-9867-4a3f-b5ae-0dc8a65c99f2.png">
+
+2. Log in with your username, or sign up for an account if you haven't already got one.
+
+<!-- USAGE PRACTICE SINGLE PLAYER MODE -->
+
+### Practice (Single-Player) Mode
+
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
