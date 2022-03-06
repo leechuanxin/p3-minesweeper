@@ -209,6 +209,10 @@ You can visit the project's website [here](https://arcane-cove-70222.herokuapp.c
 
 12. When it's a player's turn, they can left-click on the tiles on the right-hand side of the page to begin opening tiles and flagging mines.
 
+<img width="865" alt="Screenshot 2022-03-07 at 4 11 08 AM" src="https://user-images.githubusercontent.com/7672836/156940419-0722a8e4-b75d-43cb-a906-2452ba72bcf1.png">
+
+13. The faint blue and green backgrounds of the tiles, when opened or flagged, indicate the players who have clicked on them. Green always refers to the game creator, and blue the game joiner, just like the backgrounds of their profile sections in the game. In the screenshot above, the green tiles are clicked by Turk Barrett, while the blue tiles are clicked by Grotto.
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- ROADMAP -->
