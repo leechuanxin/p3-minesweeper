@@ -35,10 +35,10 @@ This Minesweeper game is built following the requirements of [Rocket's Academy P
       <a href="#usage">Usage</a>
       <ol>
         <li>
-          <a href="#usage-practice-single-player-mode">Practice (Single-Player) Mode</a>
+          <a href="#practice-usage">Practice (Single-Player) Mode</a>
         </li>
         <li>
-          <a href="#usage-2-player-mode">2-Player Mode</a>
+          <a href="#2p-usage">2-Player Mode</a>
         </li>
       </ol>
     </li>
@@ -169,7 +169,7 @@ You can visit the project's website [here](https://arcane-cove-70222.herokuapp.c
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-<!-- USAGE PRACTICE SINGLE PLAYER MODE -->
+<!-- PRACTICE USAGE -->
 
 ### Practice (Single-Player) Mode
 
@@ -185,7 +185,9 @@ You can visit the project's website [here](https://arcane-cove-70222.herokuapp.c
 
 7. Start left-clicking on the tiles on the right-hand side of the page to begin opening tiles and flagging mines.
 
-<!-- USAGE 2 PLAYER MODE -->
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- 2P USAGE -->
 
 ### 2-Player Mode
 
