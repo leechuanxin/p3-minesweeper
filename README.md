@@ -181,6 +181,32 @@ You can visit the project's website [here](https://arcane-cove-70222.herokuapp.c
 
 6. The left-hand corner of every game screen contains the profiles of the player(s) and their progress in the current game. In a Practice (Single-Player) Mode game, there is only 1 player profile present - the player who created the game. In the screenshot above, there is a green bordered table with 2 icons as labels. The first row indicates the number of mines the player has flagged, and the second row indicates the number of turns elapsed. In the bottom of this profile section, there is a red label with the number "51", just like the screenshot above. This refers to the number of mines left unflagged on the board.
 
+<img width="1420" alt="Screenshot 2022-03-07 at 3 52 42 AM" src="https://user-images.githubusercontent.com/7672836/156939736-0fd1685c-039d-4928-afb5-ef7121a35bf4.png">
+
+7. Start left-clicking on the tiles on the right-hand side of the page to begin opening tiles and flagging mines.
+
+<!-- USAGE 2 PLAYER MODE -->
+
+### 2-Player Mode
+
+<img width="649" alt="Screenshot 2022-03-07 at 3 54 36 AM" src="https://user-images.githubusercontent.com/7672836/156939787-0e025c27-1acc-4582-a4f9-97e646346dd9.png">
+
+8. After creating a 2-player game, you should be brought to an interface similar to the screenshot above. You will notice 2 player profiles: yours, and an empty player profile. The empty player profile will be properly filled once another player joins the game. You can join any game as the second player through 2 methods, as listed below.
+
+<img width="1420" alt="Screenshot 2022-03-07 at 3 57 34 AM" src="https://user-images.githubusercontent.com/7672836/156939919-df2673d5-a8da-4ad6-900e-711f454fb5b4.png">
+
+9. A player can join a 2-player game by clicking on the green "Join Game" button in the main page.
+
+<img width="1415" alt="Screenshot 2022-03-07 at 3 59 34 AM" src="https://user-images.githubusercontent.com/7672836/156940004-89d6db0f-c0c9-468f-9e17-2ec53a386506.png">
+
+10. A player can also join a 2-player game by clicking on "Spectate Game" in the main page, and once landing on the main page, clicking on "Join Game" in the empty player profile section.
+
+<img width="853" alt="Screenshot 2022-03-07 at 4 00 51 AM" src="https://user-images.githubusercontent.com/7672836/156940032-cc1db487-152d-478c-8499-d2d992326c12.png">
+
+11. Once a player has joined some other player's 2-player game, their turn will begin. By default, the second player (game joiner, not the game creator) goes first. The arrow above each player's profile image indicates the current player's turn.
+
+12. When it's a player's turn, they can left-click on the tiles on the right-hand side of the page to begin opening tiles and flagging mines.
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- ROADMAP -->
