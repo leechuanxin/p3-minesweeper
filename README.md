@@ -35,10 +35,10 @@ This Minesweeper game is built following the requirements of [Rocket's Academy P
       <a href="#usage">Usage</a>
       <ol>
         <li>
-          <a href="#practice-usage">Practice (Single-Player) Mode</a>
+          <a href="#practice-single-player-mode-1">Practice (Single-Player) Mode</a>
         </li>
         <li>
-          <a href="#2p-usage">2-Player Mode</a>
+          <a href="#2-player-mode-1">2-Player Mode</a>
         </li>
       </ol>
     </li>
@@ -169,7 +169,7 @@ You can visit the project's website [here](https://arcane-cove-70222.herokuapp.c
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-<!-- PRACTICE USAGE -->
+<!-- PRACTICE SINGLE PLAYER MODE 1 -->
 
 ### Practice (Single-Player) Mode
 
@@ -187,7 +187,7 @@ You can visit the project's website [here](https://arcane-cove-70222.herokuapp.c
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-<!-- 2P USAGE -->
+<!-- 2 PLAYER MODE 1 -->
 
 ### 2-Player Mode
 
