@@ -282,9 +282,9 @@ The actual code for this tile opening algorithm, together with other game logic 
 
 ### setInterval or WebSockets
 
-The decision to build a Minesweeper game for 2 players instead of traditional one came a few days before the project presentations. Thus, a prototype is quickly built using the simple `setInterval` function to make an API call every few seconds to get the current game state.
+The decision to build a Minesweeper game for 2 players instead of a traditional one came a few days before the project presentations. Thus, a prototype is quickly built using the simple `setInterval` function to make an API call every few seconds to get the current game state.
 
-Given more time on this project, using WebSockets or [Socket.io](https://socket.io/) would have been a cleaner solution. A `setInterval` "hack" simulates the two-way communication between the clients of spectators and players, and the server. However, given a large number of spectators, the server can be slammed with too many requests and responses every X seconds. 
+Given more time on this project, using [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) or [Socket.io](https://socket.io/) would have been a cleaner solution. A `setInterval` "hack" simulates the two-way communication between the clients of spectators and players, and the server. However, given a large number of spectators, the server can be slammed with too many requests and responses every X seconds. 
 
 Also, socket communication will only allow data retrieval when necessary - when the game state has actually changed, when the players' turns are switched. Using `setInterval`, a request will be made every X seconds in anticipation of changes; the changes need not actually have occurred. This may lead to many redundant and wasteful requests.
 
