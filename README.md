@@ -52,9 +52,6 @@ This Minesweeper game is built following the requirements of [Rocket's Academy P
           <li>
             <a href="#setinterval-or-websockets">setInterval or WebSockets</a>
           </li>
-          <li>
-            <a href="#practice-single-player-mode">Practice (Single-Player) Mode</a>
-          </li>
         </ol>
     </li>
     <li><a href="#contact">Contact</a></li>
