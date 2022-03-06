@@ -43,8 +43,21 @@ This Minesweeper game is built following the requirements of [Rocket's Academy P
       </ol>
     </li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#retrospective">Retrospective</a></li>
-	 <li><a href="#contact">Contact</a></li>
+    <li>
+    	<a href="#retrospective">Retrospective</a>
+	<ol>
+          <li>
+            <a href="#depth-first-graph-traversal-and-recursion">Depth-First Graph Traversal and Recursion</a>
+          </li>
+          <li>
+            <a href="#setinterval-or-websockets">setInterval or WebSockets</a>
+          </li>
+          <li>
+            <a href="#practice-single-player-mode">Practice (Single-Player) Mode</a>
+          </li>
+        </ol>
+    </li>
+    <li><a href="#contact">Contact</a></li>
     <li><a href="#license">License</a></li>
   </ol>
 </details>
@@ -229,7 +242,9 @@ You can visit the project's website [here](https://arcane-cove-70222.herokuapp.c
 
 ## Retrospective
 
-#### Depth-First Graph Traversal and Recursion
+<!-- DEPTH FIRST GRAPH TRAVERSAL AND RECURSION -->
+
+### Depth-First Graph Traversal and Recursion
 
 How are depth-first search and recursion related to Minesweeper? In Minesweeper, clicking to open a tile which does not have a hidden mine will reveal a number indicating the number of adjacent mines. In the case of opening an empty tile (no adjacent mines), adjacent tiles will continue (recursively) opening until a tile is opened with a number.
 
@@ -263,6 +278,18 @@ Putting the above together, a simplistic pseudocode algorithm for (recursively) 
 ```
 
 The actual code for this tile opening algorithm, together with other game logic included to track flags, mines and player turn, can be found [here](https://github.com/leechuanxin/p3-minesweeper/blob/main/controllers/games.mjs#L175-L227).
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- SETINTERVAL OR WEBSOCKETS -->
+
+### setInterval or WebSockets
+
+The decision to build a Minesweeper game for 2 players instead of traditional one came a few days before the project presentations. Thus, a prototype is quickly built using the simple `setInterval` function to make an API call every few seconds to get the current game state.
+
+Given more time on this project, using WebSockets or [Socket.io](https://socket.io/) would have been a cleaner solution. A `setInterval` "hack" simulates the two-way communication between the clients of spectators and players, and the server. However, given a large number of spectators, the server can be slammed with too many requests and responses every X seconds. 
+
+Also, socket communication will only allow data retrieval when necessary - when the game state has actually changed, when the players' turns are switched. Using `setInterval`, a request will be made every X seconds in anticipation of changes; the changes need not actually have occurred. This may lead to many redundant and wasteful requests.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
