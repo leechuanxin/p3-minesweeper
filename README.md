@@ -11,11 +11,9 @@ This Minesweeper game is built following the requirements of [Rocket's Academy P
 <details>
   <summary>Table of Contents</summary>
   <ol>
-  	<li>
+    <li>
       <a href="#game-rules">Game Rules</a>
-      
-    </li>
-	  <ol>
+      <ol>
         <li>
           <a href="#traditional-minesweeper">Traditional Minesweeper</a>
         </li>
@@ -26,6 +24,7 @@ This Minesweeper game is built following the requirements of [Rocket's Academy P
           <a href="#practice-single-player-mode">Practice (Single-Player) Mode</a>
         </li>
       </ol>
+    </li>
     <li>
       <a href="#motivation">Motivation</a>
     </li>
