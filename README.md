@@ -33,6 +33,14 @@ This Minesweeper game is built following the requirements of [Rocket's Academy P
     </li>
     <li>
       <a href="#usage">Usage</a>
+      <ol>
+        <li>
+          <a href="#usage-practice-single-player-mode">Practice (Single-Player) Mode</a>
+        </li>
+        <li>
+          <a href="#usage-2-player-mode">2-Player Mode</a>
+        </li>
+      </ol>
     </li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#retrospective">Retrospective</a></li>
@@ -151,11 +159,27 @@ You can visit the project's website [here](https://arcane-cove-70222.herokuapp.c
 
 2. Log in with your username, or sign up for an account if you haven't already got one.
 
+<img width="1419" alt="Screenshot 2022-03-07 at 3 38 40 AM" src="https://user-images.githubusercontent.com/7672836/156939297-06b98afd-d360-4824-a076-ca716be7fbbe.png">
+
+3. Once logged in, the "Create a New Game" button should be displayed on the main page. Click on it, and you will be brought to a page to select the game mode.
+
+<img width="1420" alt="Screenshot 2022-03-07 at 3 38 19 AM" src="https://user-images.githubusercontent.com/7672836/156939331-4ebe60db-1a4d-4b3b-8715-e5174a4163f4.png">
+
+4. The game creation page will provide you with 2 game modes to select. Clicking on the blue (?) button will open a popup summarising the Minesweeper rules. In the next sub-section we will explain the interface in the Practice Mode.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 <!-- USAGE PRACTICE SINGLE PLAYER MODE -->
 
 ### Practice (Single-Player) Mode
 
+<img width="1420" alt="Screenshot 2022-03-07 at 3 42 52 AM" src="https://user-images.githubusercontent.com/7672836/156939438-34fe4615-ef47-48d5-843e-3536ccdc97b5.png">
 
+5. Creating a Practice Mode game will bring you to the game, just like the screenshot above. Every game, Practice Mode or 2-Player, has a red Forfeit button in the top-right hand corner of the page for players to end the game. In a 2-player game, this counts as a loss. Just like the game creation page, there's a blue (?) button that opens a popup summarising the Minesweeper rules.
+
+<img width="583" alt="Screenshot 2022-03-07 at 3 46 07 AM" src="https://user-images.githubusercontent.com/7672836/156939554-3d6ea01c-0676-4e53-9455-cdb7a7ee2574.png">
+
+6. The left-hand corner of every game screen contains the profiles of the player(s) and their progress in the current game. In a Practice (Single-Player) Mode game, there is only 1 player profile present - the player who created the game. In the screenshot above, there is a green bordered table with 2 icons as labels. The first row indicates the number of mines the player has flagged, and the second row indicates the number of turns elapsed. In the bottom of this profile section, there is a red label with the number "51", just like the screenshot above. This refers to the number of mines left unflagged on the board.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -164,7 +188,7 @@ You can visit the project's website [here](https://arcane-cove-70222.herokuapp.c
 ## Roadmap
 
 - [ ] Migration to Socket.io for 2-player turn tracking purposes (from `setInterval`)
-- [ ] Once-a-game area-of-effect tile opening mechanic (see [this video at 0:32](https://www.youtube.com/watch?v=_PM9X4y_3R0&t=32s))
+- [ ] Once-a-game area-of-effect tile opening and flagging mechanic (see [this video at 0:32](https://www.youtube.com/watch?v=_PM9X4y_3R0&t=32s))
 - [ ] Resolve bug where UI says a vistor can join a game (as a second player) which already has 2 players playing.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
